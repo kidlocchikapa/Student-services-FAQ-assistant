@@ -1,7 +1,3 @@
-# RAG Starter Template
-
-A scaffolded RAG (Retrieval-Augmented Generation) implementation for students.
-
 ## Project Structure
 
 ```
