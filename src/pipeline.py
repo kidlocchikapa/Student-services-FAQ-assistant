@@ -8,10 +8,10 @@ import logging
 from typing import List, Optional, Dict
 from pathlib import Path
 
-from loader import load_documents, chunk_documents
-from embedder import get_embedder
-from retriever import create_vectorstore, get_retriever
-from generator import get_llm, create_rag_prompt, create_qa_chain, generate_response
+from .loader import load_documents, chunk_documents
+from .embedder import get_embedder
+from .retriever import create_vectorstore, get_retriever
+from .generator import get_llm, create_rag_prompt, create_qa_chain, generate_response
 
 
 logging.basicConfig(level=logging.INFO)

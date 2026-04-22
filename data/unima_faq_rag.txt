@@ -1,0 +1,31 @@
+University of Malawi (UNIMA) – FAQ Knowledge Base for RAG Systems
+
+Q: What is the University of Malawi?
+A: The University of Malawi (UNIMA) is one of the oldest and most prestigious higher education institutions in Malawi, established in 1965.
+
+Q: Where is UNIMA located?
+A: UNIMA has multiple campuses across Malawi, including Zomba and Blantyre.
+
+Q: What programs does UNIMA offer?
+A: UNIMA offers undergraduate and postgraduate programs in fields such as education, humanities, science, business, and law.
+
+Q: What are the admission requirements?
+A: Admission typically requires Malawi School Certificate of Education (MSCE) or equivalent, with competitive selection based on merit.
+
+Q: How can students apply?
+A: Applications are usually submitted through the central university selection system or directly via official UNIMA channels.
+
+Q: Does UNIMA offer accommodation?
+A: Yes, limited on-campus accommodation is available, allocated based on criteria such as distance and need.
+
+Q: What is the academic year structure?
+A: The academic year is typically divided into two semesters.
+
+Q: Are there online learning options?
+A: Some programs and courses may offer blended or online learning options depending on the faculty.
+
+Q: What facilities are available?
+A: UNIMA provides libraries, laboratories, ICT services, and student support services.
+
+Q: How can students contact the university?
+A: Students can contact UNIMA through official communication channels including email, phone, or the university website.
