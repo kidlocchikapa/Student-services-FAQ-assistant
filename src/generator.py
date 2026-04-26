@@ -6,30 +6,26 @@ Students: customize the prompt and LLM configuration.
 
 from typing import List, Optional, Dict
 from langchain_community.llms import Ollama, HuggingFaceHub
-from langchain_openai import ChatOpenAI
-from langchain.chains import RetrievalQA
-from langchain.prompts import PromptTemplate, ChatPromptTemplate
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_classic.chains import RetrievalQA
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain_classic.schema import HumanMessage, SystemMessage
 
 
 def get_llm(
     provider: str = "ollama",
-    model_name: str = "phi3",
-    temperature: float = 0.7,
+    model_name: str = "llema3.2", # change the model if necessary
+    temperature: float = 0.4, # grounding the model, reducing randomness
     **kwargs
 ):
     """
     Get an LLM for generation.
 
-    modify this:
-    - Choose appropriate model (phi3, llama3, mistral, etc.)
-    - Adjust temperature for creativity vs accuracy
-    - Add API key configurations
+    Temperature is set low (0.2) intentionally — this is a FAQ assistant,
+    so we want accurate, consistent answers grounded in the retrieved context,
+    not creative or variable responses.
 
-    Recommended local models:
-    - phi3 (small, fast)
-    - llama3 (better quality)
-    - mistral (balanced)
+    Supported providers:
+    - ollama: local inference (phi3, llama3, mistral)
     """
     if provider == "ollama":
         return Ollama(model=model_name, temperature=temperature)
@@ -38,14 +34,8 @@ def get_llm(
             repo_id=model_name,
             model_kwargs={"temperature": temperature}
         )
-    elif provider == "openai":
-        return ChatOpenAI(
-            model=model_name,
-            temperature=temperature,
-            **kwargs
-        )
     else:
-        raise ValueError(f"Unknown provider: {provider}")
+        raise ValueError(f"Unknown provider: {provider}") # shows which provider is being used in case of failure
 
 
 def create_rag_prompt(
@@ -53,24 +43,29 @@ def create_rag_prompt(
     template: Optional[str] = None
 ) -> PromptTemplate:
     """
-    Create a RAG prompt template.
+    RAG prompt template for the UNIMA Student Services assistant.
 
     modify:
-    - Customize the system message for their scenario
-    - Add citation/instruction formatting
-    - Include few-shot examples
+    - Custom system message for different scenario
+    - Added instruction formatting
+    - Included few-shot examples
     """
     if system_message is None:
-        system_message = """You are a helpful AI assistant.
-Use the retrieved context to answer the user's question.
-If you don't know the answer, say so clearly.
-Always cite your sources when possible."""
+        system_message = (
+    "You are a helpful student services assistant for the University of Malawi (UNIMA). "
+    "Answer student questions using ONLY the information provided in the context below. "
+    "If the context does not contain enough information to answer the question, "
+    "say: 'I don't have that information in my current knowledge base. "
+    "Please contact the UNIMA student services office directly for assistance.' "
+    "Do not make up information. Keep answers clear, concise, and friendly."
+)
 
     if template is None:
-        template = """Context:
-{context}
+        template = f"""{system_message}:
+Context:        
+{{context}}
 
-Question: {question}
+Student Question: {{question}}
 
 Answer:"""
 
@@ -84,12 +79,12 @@ Answer:"""
 
 def create_qa_chain(llm, retriever, prompt: Optional[PromptTemplate] = None):
     """
-    Create a RetrievalQA chain.
+    A RetrievalQA chain.
 
-    Students MUST modify:
-    - Chain type (stuff, map_reduce, refine)
-    - Add return_source_documents=True
-    - Implement custom output parsing
+    Uses chain_type="stuff" — this is appropriate here because:
+    - Our FAQ document is small and chunks fit easily in the context window
+    - "stuff" sends all retrieved chunks to the LLM in one call (simpler, faster)
+    - For larger document sets, switch to "map_reduce" or "refine"
     """
     if prompt is None:
         prompt = create_rag_prompt()
@@ -113,13 +108,22 @@ def generate_response(
     """
     Generate a response using the RAG pipeline.
 
-    Returns:
-        Dict with 'answer' and optionally 'source_documents'
+    Preprocesses the query slightly (strip + ensure it ends with '?')
+    so the LLM receives a clean, well-formed question.
+
+    Returns a dict with:
+    - answer: the LLM's response string
+    - sources: list of source chunks used (if return_sources=True
     """
+    # query cleanup
+    query = query.strip()
+    if query and not query.endswith("?"):
+        query = query + "?"
+
     result = qa_chain.invoke({"query": query})
 
     response = {
-        "answer": result["result"]
+        "answer": result["result"].strip()
     }
 
     if return_sources and "source_documents" in result:
