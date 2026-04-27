@@ -35,7 +35,7 @@ class RAGPipeline:
         embedder_provider: str = "ollama", #can be changed
         embedder_model: str = "nomic-embed-text", # can be changed
         llm_provider: str = "ollama",
-        llm_model: str = "llama3.2:latest", # can be changed
+        llm_model: str = "phi3:latest", # can be changed
         chunk_size: int = 500,
         chunk_overlap: int = 50,
         retrieval_k: int = 4,
@@ -168,7 +168,7 @@ def main():
         data_dir="data/",
         embedder_provider="ollama", # can be changed
         llm_provider="ollama",
-        llm_model="llama3.2:latest", # can be changed
+        llm_model="phi3:latest", # can be changed
         retrieval_k=4,
         chunk_size=500 # can be changed
     )

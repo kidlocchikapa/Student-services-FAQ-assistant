@@ -119,7 +119,7 @@ def main():
     )
     parser.add_argument(
         "--llm-model",
-        default="llama3.2",
+        default="phi3:latest",
         help="LLM model name"
     )
     parser.add_argument(

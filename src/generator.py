@@ -25,8 +25,13 @@ def _resolve_ollama_model(model_name: str) -> str:
             timeout=10,
         )
     except Exception as exc:
-        logger.warning("Unable to inspect local Ollama models: %s", exc)
-        return model_name
+        fallback = "phi3:latest"
+        logger.warning(
+            "Unable to inspect local Ollama models: %s. Falling back to '%s'.",
+            exc,
+            fallback,
+        )
+        return fallback
 
     installed = []
     for line in result.stdout.splitlines()[1:]:
@@ -57,7 +62,7 @@ def _resolve_ollama_model(model_name: str) -> str:
 
 def get_llm(
     provider: str = "ollama",
-    model_name: str = "llama3.2", # change the model if necessary
+    model_name: str = "phi3:latest", # change the model if necessary
     temperature: float = 0.4, # grounding the model, reducing randomness
     **kwargs
 ):
