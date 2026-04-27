@@ -32,10 +32,10 @@ class RAGPipeline:
     def __init__(
         self,
         data_dir: str = "data/",
-        embedder_provider: str = "ollama",
-        embedder_model: str = "nomic-embed-text",
+        embedder_provider: str = "ollama", #can be changed
+        embedder_model: str = "nomic-embed-text", # can be changed
         llm_provider: str = "ollama",
-        llm_model: str = "llama3.2:latest",
+        llm_model: str = "llama3.2:latest", # can be changed
         chunk_size: int = 500,
         chunk_overlap: int = 50,
         retrieval_k: int = 4,
@@ -131,7 +131,7 @@ class RAGPipeline:
         if self.qa_chain is None:
             raise RuntimeError("Pipeline not initialized. Call load_and_index() first.")
 
-        logger.info(f"Querying: {question}")
+        # logger.info(f"Querying: {question}")
         response = generate_response(self.qa_chain, question, return_sources)
         return response
 

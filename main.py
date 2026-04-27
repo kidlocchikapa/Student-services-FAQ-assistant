@@ -79,8 +79,8 @@ def main():
     )
     parser.add_argument(
         "--embedder",
-        default="huggingface",
-        choices=["huggingface", "openai", "ollama"],
+        default="ollama",
+        choices=["nomic-embed-text", "huggingface", "ollama"],
         help="Embedder provider"
     )
     parser.add_argument(
@@ -91,7 +91,7 @@ def main():
     )
     parser.add_argument(
         "--llm-model",
-        default="phi3",
+        default="llama3.2",
         help="LLM model name"
     )
     parser.add_argument(
