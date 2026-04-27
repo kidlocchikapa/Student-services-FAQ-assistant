@@ -5,15 +5,13 @@ Students: customize the prompt and LLM configuration.
 """
 
 from typing import List, Optional, Dict
-from langchain_community.llms import Ollama, HuggingFaceHub
 from langchain_classic.chains import RetrievalQA
-from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
-from langchain_classic.schema import HumanMessage, SystemMessage
+from langchain_core.prompts import PromptTemplate
 
 
 def get_llm(
     provider: str = "ollama",
-    model_name: str = "llema3.2", # change the model if necessary
+    model_name: str = "llama3.2", # change the model if necessary
     temperature: float = 0.4, # grounding the model, reducing randomness
     **kwargs
 ):
@@ -28,8 +26,12 @@ def get_llm(
     - ollama: local inference (phi3, llama3, mistral)
     """
     if provider == "ollama":
+        from langchain_community.llms import Ollama
+
         return Ollama(model=model_name, temperature=temperature)
     elif provider == "huggingface":
+        from langchain_community.llms import HuggingFaceHub
+
         return HuggingFaceHub(
             repo_id=model_name,
             model_kwargs={"temperature": temperature}

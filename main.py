@@ -5,7 +5,28 @@ Interactive CLI for the RAG pipeline.
 """
 
 import argparse
+import subprocess
 import sys
+from pathlib import Path
+
+
+def _bootstrap_local_venv() -> None:
+    """Relaunch with the project's virtualenv interpreter when available."""
+    project_root = Path(__file__).resolve().parent
+    venv_python = project_root / "venv" / "Scripts" / "python.exe"
+
+    if Path(sys.executable).resolve() == venv_python.resolve():
+        return
+
+    if not venv_python.exists():
+        return
+
+    result = subprocess.run([str(venv_python), __file__, *sys.argv[1:]])
+    raise SystemExit(result.returncode)
+
+
+_bootstrap_local_venv()
+
 from src.pipeline import RAGPipeline
 
 
@@ -79,9 +100,14 @@ def main():
     )
     parser.add_argument(
         "--embedder",
-        default="ollama",
-        choices=["nomic-embed-text", "huggingface", "ollama"],
+        default="huggingface",
+        choices=["huggingface", "openai", "ollama"],
         help="Embedder provider"
+    )
+    parser.add_argument(
+        "--embedder-model",
+        default="sentence-transformers/all-MiniLM-L6-v2",
+        help="Embedder model name"
     )
     parser.add_argument(
         "--llm",
@@ -111,7 +137,7 @@ def main():
 
     print("Initializing RAG Pipeline...")
     print(f"  Data directory: {args.data_dir}")
-    print(f"  Embedder: {args.embedder}")
+    print(f"  Embedder: {args.embedder} ({args.embedder_model})")
     print(f"  LLM: {args.llm} ({args.llm_model})")
     print(f"  Retrieval K: {args.k}")
     print(f"  Chunk size: {args.chunk_size}")
@@ -119,6 +145,7 @@ def main():
     pipeline = RAGPipeline(
         data_dir=args.data_dir,
         embedder_provider=args.embedder,
+        embedder_model=args.embedder_model,
         llm_provider=args.llm,
         llm_model=args.llm_model,
         retrieval_k=args.k,

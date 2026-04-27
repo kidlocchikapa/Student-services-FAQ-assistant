@@ -46,6 +46,7 @@ class RAGPipeline:
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
         self.retrieval_k = retrieval_k
+        self.vectorstore_type = vectorstore_type
         self.persist_dir = persist_dir
 
         # Initialize components - students can modify configurations

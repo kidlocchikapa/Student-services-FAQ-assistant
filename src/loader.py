@@ -11,7 +11,7 @@ from langchain_community.document_loaders import (
     WebBaseLoader,
     DirectoryLoader
 )
-from langchain.text_splitter import (
+from langchain_text_splitters import (
     RecursiveCharacterTextSplitter,
     MarkdownHeaderTextSplitter,
     TokenTextSplitter

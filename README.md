@@ -23,6 +23,12 @@ rag-starter/
 pip install -r requirements.txt
 ```
 
+If you are using the included virtual environment on Windows, run:
+
+```bash
+venv\Scripts\python -m pip install -r requirements.txt
+```
+
 ### 2. Set Up Local LLM (Recommended)
 
 Install Ollama for local LLM inference:
@@ -83,6 +89,7 @@ python -m pytest
 
 ## Troubleshooting
 
+- **`ModuleNotFoundError: No module named 'langchain_community'`**: Your virtual environment is missing the project dependencies. Reinstall with `venv\Scripts\python -m pip install -r requirements.txt`
 - **No documents loaded**: Check `data/` directory contains valid files
 - **LLM not responding**: Ensure Ollama is running (`ollama serve`)
 - **Embedding errors**: Verify `sentence-transformers` installed correctly

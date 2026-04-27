@@ -1,12 +1,4 @@
-"""
-Embedding Model
-===============
-Students must choose and configure the embedding model.
-"""
-
 from typing import List, Optional
-from langchain_community.embeddings import HuggingFaceEmbeddings, OllamaEmbeddings
-from langchain_openai import OpenAIEmbeddings
 
 
 def get_embedder(
@@ -26,17 +18,23 @@ def get_embedder(
         model_name: Name of the embedding model
     """
     if provider == "huggingface":
+        from langchain_community.embeddings import HuggingFaceEmbeddings
+
         # Open-source, free to use
         return HuggingFaceEmbeddings(
             model_name=model_name,
             model_kwargs={"device": "cpu"}
         )
     elif provider == "openai":
+        from langchain_openai import OpenAIEmbeddings
+
         # Requires OPENAI_API_KEY
         # Explore the following link for free usable api keys:
         # https://console.groq.com/keys
         return OpenAIEmbeddings(model=model_name)
     elif provider == "ollama":
+        from langchain_community.embeddings import OllamaEmbeddings
+
         # Local inference via Ollama
         return OllamaEmbeddings(model=model_name)
     else:

@@ -1,31 +1,22 @@
-# RAG Starter - Dependencies
-# ===========================
+# Runtime dependencies for the FAQ assistant
 # Install with: pip install -r requirements.txt
 
-# Core LangChain packages
-langchain>=0.1.0
-langchain-community>=0.0.10
-langchain-core>=0.1.0
-
-# Document loaders
-langchain[docstore]
+# Core LangChain packages used directly in src/
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-core>=0.3.0
+langchain-classic>=1.0.0
+langchain-openai>=0.3.0
 
 # Embeddings and vector stores
 sentence-transformers>=2.2.0
 chromadb>=0.4.0
 faiss-cpu>=1.7.0
 
-# LLMs - Install at least one
-# Local LLM (recommended for students)
+# Local LLM + embeddings via Ollama
 ollama>=0.1.0
 
-# OpenAI (optional - requires API key)
-# openai>=1.0.0
-
-# HuggingFace (optional)
-# huggingface-hub>=0.19.0
-
-# Text processing
+# Text/document processing
 python-dotenv>=1.0.0
 pypdf>=3.0.0
 beautifulsoup4>=4.12.0
@@ -35,10 +26,6 @@ lxml>=4.9.0
 tiktoken>=0.5.0
 numpy>=1.24.0
 
-# Optional: Evaluation
-# ragas>=0.0.20
-# deepeval>=0.1.0
-
-# For Jupyter notebooks
-jupyter>=1.0.0
-ipykernel>=6.0.0
+# Optional notebook tooling
+# jupyter>=1.0.0
+# ipykernel>=6.0.0
