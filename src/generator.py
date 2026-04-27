@@ -20,7 +20,7 @@ def get_llm(
     """
     Get an LLM for generation.
 
-    Temperature is set low (0.2) intentionally — this is a FAQ assistant,
+    Temperature is set low (0.4) intentionally — this is a FAQ assistant,
     so we want accurate, consistent answers grounded in the retrieved context,
     not creative or variable responses.
 
@@ -52,12 +52,12 @@ def create_rag_prompt(
     """
     if system_message is None:
         system_message = (
-    "You are a helpful student services assistant for the University of Malawi (UNIMA). "
-    "Answer student questions using ONLY the information provided in the context below. "
-    "If the context does not contain enough information to answer the question, "
-    "say: 'I don't have that information in my current knowledge base. "
-    "Please contact the UNIMA student services office directly for assistance.' "
-    "Do not make up information. Keep answers clear, concise, and friendly."
+            "You are a helpful student services assistant for the University of Malawi (UNIMA). "
+            "Answer student questions using ONLY the information provided in the context below. "
+            "If the context does not contain enough information to answer the question, "
+            "say: 'I don't have that information in my current knowledge base. "
+            "Please contact the UNIMA student services office directly for assistance.' "
+            "Do not make up information. Keep answers clear, concise, and friendly."
 )
 
     if template is None:

@@ -7,7 +7,7 @@ Main pipeline that ties together all RAG components.
 import logging
 from typing import List, Optional, Dict
 from pathlib import Path
-
+from langchain_community.vectorstores import Chroma
 from .loader import load_documents, chunk_documents
 from .embedder import get_embedder
 from .retriever import create_vectorstore, get_retriever
@@ -32,10 +32,10 @@ class RAGPipeline:
     def __init__(
         self,
         data_dir: str = "data/",
-        embedder_provider: str = "huggingface",
-        embedder_model: str = "sentence-transformers/all-MiniLM-L6-v2",
+        embedder_provider: str = "ollama",
+        embedder_model: str = "nomic-embed-text",
         llm_provider: str = "ollama",
-        llm_model: str = "phi3",
+        llm_model: str = "llama3.2:latest",
         chunk_size: int = 500,
         chunk_overlap: int = 50,
         retrieval_k: int = 4,
@@ -77,11 +77,21 @@ class RAGPipeline:
         persist_path = Path(self.persist_dir) if self.persist_dir else None
         if persist_path and persist_path.exists() and not force_rebuild:
             logger.info("Loading existing vectorstore...")
-            # TODO: Load from persist_dir
-            # self.vectorstore = Chroma(persist_directory=self.persist_dir, ...)
+            # Load from persist_dir
+            self.vectorstore = Chroma(
+                persist_directory=self.persist_dir,
+                embedding_function=self.embedder
+             )
+            logger.info("Vectorstore loaded from disk.")
         else:
             logger.info("Loading and chunking documents...")
             documents = load_documents(self.data_dir)
+
+            if not documents:
+                raise RuntimeError(
+                    f"No documents found in '{self.data_dir}'."
+                )
+            
             chunks = chunk_documents(
                 documents,
                 chunk_size=self.chunk_size,
@@ -93,9 +103,10 @@ class RAGPipeline:
             self.vectorstore = create_vectorstore(
                 chunks,
                 self.embedder,
-                db_type="chroma",
+                db_type=self.vectorstore_type,
                 persist_dir=self.persist_dir
             )
+            logger.info("Vector index created")
 
         logger.info("Setting up retriever...")
         self.retriever = get_retriever(
@@ -146,31 +157,33 @@ class RAGPipeline:
                 "sources": response.get("sources", [])
             })
 
-        # TODO: Implement evaluation metrics
-        # - Precision@K
-        # - Context relevance
-        # - Answer quality
-
+        #evaluation metrics
+        logger.info(f"Evaluated {len(results)} queries.")
         return {"results": results}
-
 
 def main():
     """Main entry point for testing."""
     pipeline = RAGPipeline(
         data_dir="data/",
-        embedder_provider="huggingface",
+        embedder_provider="ollama", # can be changed
         llm_provider="ollama",
-        llm_model="phi3",
-        retrieval_k=3
+        llm_model="llama3.2:latest", # can be changed
+        retrieval_k=4,
+        chunk_size=500 # can be changed
     )
 
     pipeline.load_and_index()
 
-    # Example query
-    response = pipeline.query("What is Retrieval-Augmented Generation?")
-    print("\nAnswer:", response["answer"])
-    if "sources" in response:
-        print("\nSources:", response["sources"])
+    test_questions = [
+    "What programs does UNIMA offer?",
+    "How do I apply to UNIMA?",
+    "Is accommodation available on campus?",
+    ]
+
+    for q in test_questions:
+        print(f"\nQ: {q}")
+        response = pipeline.query(q)
+        print(f"A: {response['answer']}")
 
 
 if __name__ == "__main__":
