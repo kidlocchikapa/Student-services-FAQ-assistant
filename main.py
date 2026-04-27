@@ -50,15 +50,9 @@ def interactive_mode(pipeline: RAGPipeline):
             if not query:
                 continue
 
-            response = pipeline.query(query, return_sources=True)
+            response = pipeline.query(query, return_sources=False)
 
             print(f"\nAssistant: {response['answer']}")
-
-            if "sources" in response and response["sources"]:
-                print("\nSources:")
-                for i, source in enumerate(response["sources"], 1):
-                    print(f"  {i}. {source.get('metadata', {}).get('source', 'Unknown')}")
-                    print(f"     {source['content'][:100]}...")
 
             print()
 
