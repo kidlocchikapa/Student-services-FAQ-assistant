@@ -95,8 +95,8 @@ def create_qa_chain(llm, retriever, prompt: Optional[PromptTemplate] = None):
         llm=llm,
         chain_type="stuff",
         retriever=retriever,
-        prompt=prompt,
-        return_source_documents=True
+        return_source_documents=True,
+        chain_type_kwargs={"prompt": prompt}
     )
 
     return qa_chain
