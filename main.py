@@ -5,6 +5,7 @@ Interactive CLI for the RAG pipeline.
 """
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -26,6 +27,7 @@ def _bootstrap_local_venv() -> None:
 
 
 _bootstrap_local_venv()
+os.environ.setdefault("USER_AGENT", "student-services-faq-assistant/1.0")
 
 from src.pipeline import RAGPipeline
 
@@ -101,7 +103,7 @@ def main():
     parser.add_argument(
         "--embedder",
         default="huggingface",
-        choices=["huggingface", "openai", "ollama"],
+        choices=["huggingface", "openai", "ollama", "local"],
         help="Embedder provider"
     )
     parser.add_argument(

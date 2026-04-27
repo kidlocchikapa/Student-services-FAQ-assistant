@@ -4,9 +4,55 @@ LLM Generator Module
 Students: customize the prompt and LLM configuration.
 """
 
-from typing import List, Optional, Dict
+import logging
+import subprocess
+from typing import Optional, Dict
+
 from langchain_classic.chains import RetrievalQA
 from langchain_core.prompts import PromptTemplate
+
+
+logger = logging.getLogger(__name__)
+
+
+def _resolve_ollama_model(model_name: str) -> str:
+    try:
+        result = subprocess.run(
+            ["ollama", "list"],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+    except Exception as exc:
+        logger.warning("Unable to inspect local Ollama models: %s", exc)
+        return model_name
+
+    installed = []
+    for line in result.stdout.splitlines()[1:]:
+        parts = line.split()
+        if parts:
+            installed.append(parts[0])
+
+    if not installed:
+        return model_name
+
+    model_aliases = {model_name}
+    if ":" in model_name:
+        model_aliases.add(model_name.split(":", 1)[0])
+    else:
+        model_aliases.add(f"{model_name}:latest")
+
+    if any(name in installed for name in model_aliases):
+        return model_name
+
+    fallback = "phi3:latest" if "phi3:latest" in installed else installed[0]
+    logger.warning(
+        "Ollama model '%s' is not installed. Falling back to '%s'.",
+        model_name,
+        fallback,
+    )
+    return fallback
 
 
 def get_llm(
@@ -28,7 +74,8 @@ def get_llm(
     if provider == "ollama":
         from langchain_community.llms import Ollama
 
-        return Ollama(model=model_name, temperature=temperature)
+        resolved_model = _resolve_ollama_model(model_name)
+        return Ollama(model=resolved_model, temperature=temperature)
     elif provider == "huggingface":
         from langchain_community.llms import HuggingFaceHub
 
