@@ -32,12 +32,37 @@ os.environ.setdefault("USER_AGENT", "student-services-faq-assistant/1.0")
 from src.pipeline import RAGPipeline
 
 
+def _print_interactive_help() -> None:
+    print("Commands:")
+    print("  teach   Add a new FAQ entry and refresh the knowledge base")
+    print("  refresh Rebuild the vector index from the current data files")
+    print("  help    Show this help message")
+    print("  quit    Exit the assistant\n")
+
+
+def _teach_interactively(pipeline: RAGPipeline) -> None:
+    print("\nTeach mode: add a new UNIMA FAQ entry.")
+    question = input("New question: ").strip()
+    if not question:
+        print("Teaching cancelled: question cannot be empty.\n")
+        return
+
+    answer = input("New answer: ").strip()
+    if not answer:
+        print("Teaching cancelled: answer cannot be empty.\n")
+        return
+
+    target_path = pipeline.add_faq_entry(question, answer)
+    print(f"\nKnowledge saved to: {target_path}")
+    print("Vector index refreshed. You can ask that question now.\n")
+
+
 def interactive_mode(pipeline: RAGPipeline):
     """Run the RAG assistant in interactive mode."""
     print("=" * 50)
     print("RAG Assistant - Interactive Mode")
     print("=" * 50)
-    print("Type 'quit' or 'exit' to stop\n")
+    print("Type 'help' for commands or 'quit' to stop\n")
 
     while True:
         try:
@@ -46,6 +71,20 @@ def interactive_mode(pipeline: RAGPipeline):
             if query.lower() in ["quit", "exit", "q"]:
                 print("Goodbye!")
                 break
+
+            if query.lower() == "help":
+                _print_interactive_help()
+                continue
+
+            if query.lower() == "refresh":
+                print("\nRefreshing knowledge base...")
+                pipeline.refresh_knowledge()
+                print("Knowledge base refreshed.\n")
+                continue
+
+            if query.lower() == "teach":
+                _teach_interactively(pipeline)
+                continue
 
             if not query:
                 continue

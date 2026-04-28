@@ -65,6 +65,12 @@ python main.py --mode interactive
 python main.py --mode demo
 ```
 
+In interactive mode, you can also use:
+
+- `teach` to add a new Q/A pair to the local knowledge base and refresh the index
+- `refresh` to rebuild the vector index from the current files in `data/`
+- `help` to show the available commands
+
 ## Required Modifications
 
 **This is a scaffold - you MUST modify the following:**
