@@ -75,6 +75,26 @@ class RAGPipeline:
         self.retriever = None
         self.qa_chain = None
 
+    def _normalize_question(self, text: str) -> str:
+        normalized = re.sub(r"\s+", " ", text.strip().lower())
+        return normalized.rstrip("?.!")
+
+    def _extract_answer_from_doc(self, doc) -> Optional[str]:
+        match = re.search(r"Answer:\s*(.*)", doc.page_content, flags=re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        return None
+
+    def _try_fast_faq_match(self, question: str, retrieved_docs: List) -> Optional[str]:
+        normalized_question = self._normalize_question(question)
+        for doc in retrieved_docs:
+            source_question = doc.metadata.get("question")
+            if not source_question:
+                continue
+            if self._normalize_question(source_question) == normalized_question:
+                return self._extract_answer_from_doc(doc)
+        return None
+
     def refresh_knowledge(self) -> None:
         """Rebuild the vector index from the latest knowledge base files."""
         self.load_and_index(force_rebuild=True)
@@ -270,7 +290,25 @@ class RAGPipeline:
                 response["sources"] = []
             return response
 
-        response = generate_response(self.qa_chain, question, return_sources)
+        exact_answer = self._try_fast_faq_match(question, retrieved_docs)
+        if exact_answer:
+            response = {"answer": exact_answer}
+            if return_sources:
+                response["sources"] = [
+                    {
+                        "content": doc.page_content[:200] + "...",
+                        "metadata": doc.metadata,
+                    }
+                    for doc in retrieved_docs
+                ]
+            return response
+
+        response = generate_response(
+            self.qa_chain,
+            question,
+            retrieved_docs,
+            return_sources,
+        )
         return response
 
     def evaluate(self, test_queries: List[Dict]) -> Dict:

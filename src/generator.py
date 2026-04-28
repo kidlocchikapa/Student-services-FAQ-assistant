@@ -6,9 +6,9 @@ Students: customize the prompt and LLM configuration.
 
 import logging
 import subprocess
-from typing import Optional, Dict
+from typing import Dict, List, Optional
 
-from langchain_classic.chains import RetrievalQA
+from langchain_core.documents import Document
 from langchain_core.prompts import PromptTemplate
 
 
@@ -62,48 +62,38 @@ def _resolve_ollama_model(model_name: str) -> str:
 
 def get_llm(
     provider: str = "ollama",
-    model_name: str = "phi3:latest", # change the model if necessary
-    temperature: float = 0.4, # grounding the model, reducing randomness
-    **kwargs
+    model_name: str = "phi3:latest",
+    temperature: float = 0.4,
+    **kwargs,
 ):
     """
     Get an LLM for generation.
 
-    Temperature is set low (0.4) intentionally — this is a FAQ assistant,
-    so we want accurate, consistent answers grounded in the retrieved context,
-    not creative or variable responses.
-
-    Supported providers:
-    - ollama: local inference (phi3, llama3, mistral)
+    Temperature is set low (0.4) intentionally because this is a FAQ
+    assistant, so we want accurate, consistent answers grounded in the
+    retrieved context, not creative or variable responses.
     """
     if provider == "ollama":
         from langchain_community.llms import Ollama
 
         resolved_model = _resolve_ollama_model(model_name)
         return Ollama(model=resolved_model, temperature=temperature)
-    elif provider == "huggingface":
+    if provider == "huggingface":
         from langchain_community.llms import HuggingFaceHub
 
         return HuggingFaceHub(
             repo_id=model_name,
-            model_kwargs={"temperature": temperature}
+            model_kwargs={"temperature": temperature},
         )
-    else:
-        raise ValueError(f"Unknown provider: {provider}") # shows which provider is being used in case of failure
+
+    raise ValueError(f"Unknown provider: {provider}")
 
 
 def create_rag_prompt(
     system_message: Optional[str] = None,
-    template: Optional[str] = None
+    template: Optional[str] = None,
 ) -> PromptTemplate:
-    """
-    RAG prompt template for the UNIMA Student Services assistant.
-
-    modify:
-    - Custom system message for different scenario
-    - Added instruction formatting
-    - Included few-shot examples
-    """
+    """RAG prompt template for the UNIMA Student Services assistant."""
     if system_message is None:
         system_message = (
             "You are a helpful student services assistant for the University of Malawi (UNIMA). "
@@ -113,89 +103,85 @@ def create_rag_prompt(
             "say: 'I don't have that information in my current knowledge base. "
             "Please contact the UNIMA student services office directly for assistance.' "
             "Do not make up information. Keep answers clear, concise, and friendly."
-)
+        )
 
     if template is None:
         template = f"""{system_message}:
-Context:        
+Context:
 {{context}}
 
 Student Question: {{question}}
 
 Answer:"""
 
-    prompt = PromptTemplate(
-        template=template,
-        input_variables=["context", "question"]
-    )
-
-    return prompt
+    return PromptTemplate(template=template, input_variables=["context", "question"])
 
 
-def create_qa_chain(llm, retriever, prompt: Optional[PromptTemplate] = None):
+def create_qa_chain(llm, retriever=None, prompt: Optional[PromptTemplate] = None):
     """
-    A RetrievalQA chain.
+    Create a lightweight QA config.
 
-    Uses chain_type="stuff" — this is appropriate here because:
-    - Our FAQ document is small and chunks fit easily in the context window
-    - "stuff" sends all retrieved chunks to the LLM in one call (simpler, faster)
-    - For larger document sets, switch to "map_reduce" or "refine"
+    Retrieval is handled in the pipeline so we avoid retrieving the same
+    documents twice for one user query.
     """
     if prompt is None:
         prompt = create_rag_prompt()
 
-    qa_chain = RetrievalQA.from_chain_type(
-        llm=llm,
-        chain_type="stuff",
-        retriever=retriever,
-        return_source_documents=True,
-        chain_type_kwargs={"prompt": prompt}
-    )
+    return {"llm": llm, "prompt": prompt}
 
-    return qa_chain
+
+def _format_context(source_documents: List[Document]) -> str:
+    context_blocks = []
+    for index, doc in enumerate(source_documents, start=1):
+        source = doc.metadata.get("source", "unknown")
+        question = doc.metadata.get("question")
+        header = f"[Source {index}] {source}"
+        if question:
+            header += f" | Question: {question}"
+        context_blocks.append(f"{header}\n{doc.page_content}")
+    return "\n\n".join(context_blocks)
 
 
 def generate_response(
     qa_chain,
     query: str,
-    return_sources: bool = True
+    source_documents: List[Document],
+    return_sources: bool = True,
 ) -> Dict:
     """
     Generate a response using the RAG pipeline.
 
-    Preprocesses the query slightly (strip + ensure it ends with '?')
-    so the LLM receives a clean, well-formed question.
-
-    Returns a dict with:
-    - answer: the LLM's response string
-    - sources: list of source chunks used (if return_sources=True
+    The pipeline supplies the retrieved documents directly so this step only
+    formats context and calls the language model once.
     """
-    # query cleanup
     query = query.strip()
     if query and not query.endswith("?"):
         query = query + "?"
 
-    result = qa_chain.invoke({"query": query})
+    llm = qa_chain["llm"]
+    prompt = qa_chain["prompt"]
+    formatted_prompt = prompt.format(
+        context=_format_context(source_documents),
+        question=query,
+    )
+    raw_result = llm.invoke(formatted_prompt)
+    answer = raw_result.strip() if isinstance(raw_result, str) else str(raw_result).strip()
 
-    response = {
-        "answer": result["result"].strip()
-    }
+    response = {"answer": answer}
 
-    if return_sources and "source_documents" in result:
-        sources = [
+    if return_sources:
+        response["sources"] = [
             {
                 "content": doc.page_content[:200] + "...",
-                "metadata": doc.metadata
+                "metadata": doc.metadata,
             }
-            for doc in result["source_documents"]
+            for doc in source_documents
         ]
-        response["sources"] = sources
 
     return response
 
 
 if __name__ == "__main__":
-    # Test prompt creation
     prompt = create_rag_prompt()
     print("Default prompt template:")
     print(prompt.template)
