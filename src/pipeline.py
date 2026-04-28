@@ -24,6 +24,13 @@ OUT_OF_SCOPE_MESSAGE = (
     "I'm here to answer University of Malawi (UNIMA) student services FAQs only. "
     "I don't have information about that topic in my current UNIMA knowledge base."
 )
+TUITION_CLARIFICATION_MESSAGE = (
+    "UNIMA tuition fees vary by programme and student category. Tell me:\n\n"
+    "* your programme/course\n"
+    "* undergraduate or postgraduate\n"
+    "* government-sponsored or self-sponsored\n\n"
+    "and I'll help check the fee structure for you."
+)
 INDEX_SCHEMA_VERSION = "faq-pairs-v1"
 
 
@@ -94,6 +101,19 @@ class RAGPipeline:
             if self._normalize_question(source_question) == normalized_question:
                 return self._extract_answer_from_doc(doc)
         return None
+
+    def _is_broad_fee_question(self, question: str) -> bool:
+        normalized = self._normalize_question(question)
+        fee_terms = {"fee", "fees", "tuition", "payment", "payments", "cost", "costs"}
+        detail_terms = {
+            "programme", "program", "course", "undergraduate", "postgraduate",
+            "masters", "master", "phd", "dba", "mba", "bsc", "government",
+            "self", "sponsored", "international", "malawian", "year",
+        }
+        query_tokens = self._tokenize(normalized)
+        has_fee_term = bool(query_tokens & fee_terms)
+        has_detail_term = bool(query_tokens & detail_terms)
+        return has_fee_term and not has_detail_term
 
     def refresh_knowledge(self) -> None:
         """Rebuild the vector index from the latest knowledge base files."""
@@ -288,6 +308,18 @@ class RAGPipeline:
             response = {"answer": OUT_OF_SCOPE_MESSAGE}
             if return_sources:
                 response["sources"] = []
+            return response
+
+        if self._is_broad_fee_question(question):
+            response = {"answer": TUITION_CLARIFICATION_MESSAGE}
+            if return_sources:
+                response["sources"] = [
+                    {
+                        "content": doc.page_content[:200] + "...",
+                        "metadata": doc.metadata,
+                    }
+                    for doc in retrieved_docs
+                ]
             return response
 
         exact_answer = self._try_fast_faq_match(question, retrieved_docs)

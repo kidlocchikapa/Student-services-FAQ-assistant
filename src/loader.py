@@ -24,6 +24,7 @@ def _parse_faq_text(file_path: Path) -> List[Document]:
     """Convert a plain-text FAQ file into one document per Q/A pair."""
     text = file_path.read_text(encoding="utf-8")
     text = text.replace("\u2013", "-")
+    text = re.sub(r"(?m)^Q\d+\s*:", "Q:", text)
 
     matches = re.findall(
         r"Q:\s*(.*?)\s*A:\s*(.*?)(?=\n\s*Q:|\Z)",
