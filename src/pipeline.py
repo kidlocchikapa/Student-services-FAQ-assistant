@@ -165,7 +165,8 @@ class RAGPipeline:
             "admission", "apply", "application", "programs", "course", "courses",
             "accommodation", "semester", "academic", "online", "learning",
             "facilities", "library", "libraries", "ict", "contact", "services",
-            "education", "faculty",
+            "education", "faculty", "graduation", "congregation", "ceremony",
+            "graduand", "calendar",
         }
 
         if query_tokens & scope_terms:
