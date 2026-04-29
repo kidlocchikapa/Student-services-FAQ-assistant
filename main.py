@@ -6,6 +6,7 @@ Interactive CLI for the RAG pipeline.
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -29,7 +30,7 @@ def _bootstrap_local_venv() -> None:
 _bootstrap_local_venv()
 os.environ.setdefault("USER_AGENT", "student-services-faq-assistant/1.0")
 
-from src.pipeline import RAGPipeline
+from src.pipeline import RAGPipeline, TUITION_CLARIFICATION_MESSAGE
 
 
 def _print_interactive_help() -> None:
@@ -57,12 +58,30 @@ def _teach_interactively(pipeline: RAGPipeline) -> None:
     print("Vector index refreshed. You can ask that question now.\n")
 
 
+def _contains_fee_terms(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(fee|fees|tuition|cost|costs|payment|payments|sponsored|undergraduate|postgraduate)\b",
+            text.lower(),
+        )
+    )
+
+
+def _expand_follow_up_query(query: str) -> str:
+    return (
+        "UNIMA tuition fees request. Student details: "
+        f"{query}. "
+        "Use the available fee structure and clarify any missing category only if necessary."
+    )
+
+
 def interactive_mode(pipeline: RAGPipeline):
     """Run the RAG assistant in interactive mode."""
     print("=" * 50)
     print("RAG Assistant - Interactive Mode")
     print("=" * 50)
     print("Type 'help' for commands or 'quit' to stop\n")
+    awaiting_fee_details = False
 
     while True:
         try:
@@ -89,7 +108,12 @@ def interactive_mode(pipeline: RAGPipeline):
             if not query:
                 continue
 
-            response = pipeline.query(query, return_sources=False)
+            effective_query = query
+            if awaiting_fee_details and not _contains_fee_terms(query):
+                effective_query = _expand_follow_up_query(query)
+
+            response = pipeline.query(effective_query, return_sources=False)
+            awaiting_fee_details = response["answer"].strip() == TUITION_CLARIFICATION_MESSAGE.strip()
 
             print(f"\nAssistant: {response['answer']}")
 

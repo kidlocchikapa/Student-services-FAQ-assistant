@@ -1,135 +1,59 @@
-Q1: What is the application fee for University of Malawi programmes?
-A:
+Q: What is the application fee for University of Malawi programmes?
+A: The application fee is:
+- Malawian Nationals: MWK 46,800
+- International Students: USD 30
 
-* Malawian Nationals: MWK 46,800
-* International Students: USD 30
+Q: What is the enrollment fee?
+A: The enrollment fee is:
+- Malawian Nationals: MWK 315,000
+- International Students: USD 250
 
----
+Q: How much are undergraduate tuition fees for Bachelor of Science (BSc) in Business Management?
+A: The undergraduate tuition fees for Bachelor of Science (BSc) in Business Management are charged per month as follows:
+- Year 1: Malawian Nationals - MWK 208,800; International Students - USD 165
+- Year 2: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 3: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 4: Malawian Nationals - MWK 208,800; International Students - USD 185
 
-Q2: What is the enrollment fee?
-A:
+Q: Is there a technology fee?
+A: Yes. The technology fee is charged per subject:
+- Malawian Nationals: MWK 19,800 per subject
+- International Students: USD 10 per subject
 
-* Malawian Nationals: MWK 315,000
-* International Students: USD 250
+Q: What are the postgraduate tuition fees for master's programmes?
+A: The postgraduate tuition fees for master's programmes (MBA / MSc) are charged per month as follows:
+- Year 1: MWK 243,000; International Students - USD 190
+- Year 2: MWK 261,000; International Students - USD 225
 
----
+Q: What are the doctorate programme tuition fees?
+A: The doctorate programme tuition fees for PhD / DBA programmes are charged per month as follows:
+- Year 1: MWK 360,000; International Students - USD 235-245
+- Year 2: MWK 378,000; International Students - USD 255-265
+- Year 3: MWK 378,000; International Students - USD 255-275
 
-Q3: How much are undergraduate tuition fees?
-A:
-Bachelor of Science (BSc) – Business Management
+Q: Can fees change?
+A: Yes. Tuition and other fees may change without prior notice.
 
-Year 1 Tuition (Per Month)
+Q: Are repeated subjects charged separately?
+A: Yes. Students who repeat subjects are charged additional fees.
 
-* Malawian Nationals: MWK 208,800
-* International Students: USD 165
+Q: How are fees paid?
+A: Fees are usually paid monthly or according to the selected payment plan.
 
-Year 2 Tuition (Per Month)
+Q: What proof is needed for Malawian fee status?
+A: Students must provide proof of residency or nationality to qualify for Malawian national fees.
 
-* Malawian Nationals: MWK 208,800
-* International Students: USD 185
+Q: Which bank is used for fee payments?
+A: The bank details for fee payments are:
+- Bank Name: Standard Bank of Malawi
+- Account Name: Astria Learning Limited
+- Account Number: 9100007260609
 
-Year 3 Tuition (Per Month)
+Q: Where can students confirm updated fees?
+A: Students are encouraged to contact the University administration or visit the official University of Malawi E-Campus website for the latest updates.
 
-* Malawian Nationals: MWK 208,800
-* International Students: USD 185
-
-Year 4 Tuition (Per Month)
-
-* Malawian Nationals: MWK 208,800
-* International Students: USD 185
-
----
-Q: What are the tuition fees?
-A: The tuition fees are 10,000 for undergraduate programmes and 300,000 for postgraduate programmes
-
-
-Q4: Is there a technology fee?
-A:
-Yes.
-
-* Malawian Nationals: MWK 19,800 per subject
-* International Students: USD 10 per subject
-
----
-
-Q5: What are the postgraduate tuition fees?
-A:
-MASTER'S (MBA / MSc Programmes)
-
-Year 1 Tuition (Per Month)
-
-* MWK 243,000
-* International Students: USD 190
-
-Year 2 Tuition (Per Month)
-
-* MWK 261,000
-* International Students: USD 225
-
----
-
-Q6: What are the doctorate programme tuition fees?
-A:
-PhD / DBA Programmes
-
-Year 1 Tuition (Per Month)
-
-* MWK 360,000
-* International Students: USD 235–245
-
-Year 2 Tuition (Per Month)
-
-* MWK 378,000
-* International Students: USD 255–265
-
-Year 3 Tuition (Per Month)
-
-* MWK 378,000
-* International Students: USD 255–275
-
----
-
-Q7: Can fees change?
-A:
-Yes. Tuition and other fees may change without prior notice.
-
----
-
-Q8: Are repeated subjects charged separately?
-A:
-Yes. Students who repeat subjects are charged additional fees.
-
----
-
-Q9: How are fees paid?
-A:
-Fees are usually paid monthly or according to the selected payment plan.
-
----
-
-Q10: What proof is needed for Malawian fee status?
-A:
-Students must provide proof of residency or nationality to qualify for Malawian national fees.
-
----
-
-Q11: Which bank is used for fee payments?
-A:
-Bank Name:
-Standard Bank of Malawi
-
-Account Name:
-Astria Learning Limited
-
-Account Number:
-9100007260609
-
----
-
-Q12: Where can students confirm updated fees?
-A:
-Students are encouraged to contact the University administration or visit the official University of Malawi E-Campus website for the latest updates.
-
----
-
-## END OF FAQ GUIDE
+Q: How should the assistant respond when a student asks a broad tuition-fee question?
+A: If a student asks a broad question such as "How much are fees at UNIMA?", explain that UNIMA tuition fees vary by programme and student category. Then ask the student for:
+- their programme or course
+- whether they are undergraduate or postgraduate
+- whether they are government-sponsored or self-sponsored
