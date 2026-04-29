@@ -61,6 +61,9 @@ Place your documents in the `data/` directory:
 # Interactive mode
 python main.py --mode interactive
 
+# Interactive mode with official web fallback
+python main.py --mode interactive --enable-web-fallback --web-url https://www.unima.ac.mw/
+
 # Demo mode
 python main.py --mode demo
 ```
@@ -70,6 +73,29 @@ In interactive mode, you can also use:
 - `teach` to add a new Q/A pair to the local knowledge base and refresh the index
 - `refresh` to rebuild the vector index from the current files in `data/`
 - `help` to show the available commands
+
+## Hybrid RAG
+
+The assistant can optionally use official UNIMA web pages as a fallback source when the local `data/` knowledge base does not have enough information.
+
+Example:
+
+```bash
+python main.py --mode interactive --enable-web-fallback --web-url https://www.unima.ac.mw/
+```
+
+You can repeat `--web-url` to add more official pages:
+
+```bash
+python main.py --mode interactive --enable-web-fallback \
+  --web-url https://www.unima.ac.mw/ \
+  --web-url <another-official-unima-page>
+```
+
+Recommended usage:
+- Keep local FAQ files as the main approved source
+- Add only official UNIMA pages as web fallback URLs
+- Use web fallback especially for current or updated information
 
 ## Required Modifications
 

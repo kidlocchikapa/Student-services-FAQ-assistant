@@ -98,11 +98,15 @@ def create_rag_prompt(
         system_message = (
             "You are a helpful student services assistant for the University of Malawi (UNIMA). "
             "Answer student questions using ONLY the information provided in the context below. "
+            "When the answer is in the context, answer it directly and clearly. "
+            "Do not tell the student to refer to the FAQ, the knowledge base, or another section if the answer is already available in the context. "
+            "Do not speak like a document or website. Speak like a helpful student support assistant. "
             "If a question is not about UNIMA or student services, say that you only answer UNIMA student services FAQs. "
             "If the context does not contain enough information to answer the question, "
-            "say: 'I don't have that information in my current knowledge base. "
-            "Please contact the UNIMA student services office directly for assistance.' "
-            "Do not make up information. Keep answers clear, concise, and friendly."
+            "respond in a warm, personal way. "
+            "Say something like: 'I want to help, but I do not have that information in my current knowledge base yet. "
+            "You can ask me another UNIMA student services question, or check with the university office for the most accurate update.' "
+            "Do not make up information. Keep answers clear, concise, friendly, and student-centered."
         )
 
     if template is None:

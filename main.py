@@ -191,6 +191,18 @@ def main():
         default=500,
         help="Chunk size for text splitting"
     )
+    parser.add_argument(
+        "--enable-web-fallback",
+        action="store_true",
+        help="Use official UNIMA web pages as a fallback source"
+    )
+    parser.add_argument(
+        "--web-url",
+        action="append",
+        dest="web_urls",
+        default=[],
+        help="Official UNIMA web page URL to include for fallback retrieval. Repeat for multiple URLs."
+    )
 
     args = parser.parse_args()
 
@@ -200,6 +212,9 @@ def main():
     print(f"  LLM: {args.llm} ({args.llm_model})")
     print(f"  Retrieval K: {args.k}")
     print(f"  Chunk size: {args.chunk_size}")
+    print(f"  Web fallback: {'enabled' if args.enable_web_fallback else 'disabled'}")
+    if args.enable_web_fallback and args.web_urls:
+        print(f"  Web URLs: {', '.join(args.web_urls)}")
 
     pipeline = RAGPipeline(
         data_dir=args.data_dir,
@@ -208,7 +223,9 @@ def main():
         llm_provider=args.llm,
         llm_model=args.llm_model,
         retrieval_k=args.k,
-        chunk_size=args.chunk_size
+        chunk_size=args.chunk_size,
+        enable_web_fallback=args.enable_web_fallback,
+        web_fallback_urls=args.web_urls,
     )
 
     pipeline.load_and_index()

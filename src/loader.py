@@ -5,12 +5,11 @@ Document Loader and Chunker
 
 import re
 from pathlib import Path
-from typing import List
+from typing import List, Sequence
 from langchain_community.document_loaders import (
     TextLoader,
     PyPDFLoader,
     WebBaseLoader,
-    DirectoryLoader
 )
 from langchain_core.documents import Document
 from langchain_text_splitters import (
@@ -75,6 +74,23 @@ def load_documents(data_dir: str = "data/") -> List:
     # for pdf_path in path.glob("*.pdf"):
     #     loader = PyPDFLoader(str(pdf_path))
     #     documents.extend(loader.load())
+
+    return documents
+
+
+def load_web_documents(urls: Sequence[str]) -> List[Document]:
+    """Load documents from official web pages for fallback retrieval."""
+    if not urls:
+        return []
+
+    loader = WebBaseLoader(list(urls))
+    documents = loader.load()
+
+    for doc in documents:
+        text = re.sub(r"\s+", " ", doc.page_content).strip()
+        doc.page_content = text
+        doc.metadata["source_type"] = "web"
+        doc.metadata.setdefault("source", doc.metadata.get("source", "web"))
 
     return documents
 

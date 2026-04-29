@@ -1,35 +1,35 @@
 Q: Does the University of Malawi (UNIMA) provide accommodation for all students?
-A: No. Students are admitted on a non-residential basis, which means accommodation is not guaranteed for everyone.
+A: No. UNIMA admits students on a non-residential basis, so accommodation is not guaranteed for every student.
 
 Q: Is accommodation guaranteed for first-year students?
-A: No. Even first-year students are not guaranteed campus accommodation due to limited space.
+A: No. First-year students are not guaranteed campus accommodation because hostel space is limited.
 
 Q: How can I get a room on campus?
-A: Students must apply for hostel space. Rooms are limited and usually allocated through a computer-based random selection system. Priority is often given to students with disabilities.
+A: Students must apply for hostel space. Rooms are limited and are usually allocated through a computerized random selection system. Priority may be given to students with disabilities.
 
 Q: How are students selected for hostels?
-A: Selection is done through a random computerized system, with males and females selected separately.
+A: Hostel selection is done through a computerized random system, with male and female students selected separately.
 
-Q: What should I do if I don’t get campus accommodation?
-A: Students must look for off-campus housing such as private flats, shared houses, or private student hostels near campus.
+Q: What should I do if I do not get campus accommodation?
+A: You should look for off-campus housing such as private flats, shared houses, or private student hostels near campus.
 
 Q: Are there hostels available at UNIMA?
-A: Yes, but they are limited. Rooms are shared and usually include basic furniture, but students must bring their own bedding.
+A: Yes. UNIMA has hostels, but the available space is limited. Rooms are shared and usually include basic furniture. Students must bring their own bedding.
 
-Q: How many students are in one room at UNIMA hostels?
-A: Two students per room.
+Q: How many students stay in one room in UNIMA hostels?
+A: Two students share one room.
 
-Q: What furniture is provided in the rooms?
-A: Beds, chairs for each student, and lockers are provided.
+Q: What furniture is provided in hostel rooms?
+A: The rooms usually include beds, chairs for each student, and lockers.
 
-Q: Are bathrooms shared or private?
-A: Bathrooms are shared among students.
+Q: Are bathrooms shared or private in UNIMA hostels?
+A: Bathrooms are shared.
 
 Q: Is Wi-Fi available in UNIMA hostels?
-A: Yes, Wi-Fi is available through eduroam.
+A: Yes. Wi-Fi is available through eduroam.
 
 Q: Are there study areas in the accommodation blocks?
-A: Yes, there are study areas such as roundtables for group and individual study.
+A: Yes. There are study areas, including round tables for group and individual study.
 
 Q: Can students cook in UNIMA hostel rooms?
 A: No. Cooking is not allowed in hostel rooms.
@@ -38,16 +38,16 @@ Q: What are the hostel curfew rules?
 A: Students must stop movement and visiting by 00:00 (midnight).
 
 Q: Are visitors allowed in the hostels?
-A: Yes, but only after following necessary hostel procedures and rules.
+A: Yes, but visitors must follow hostel procedures and rules.
 
 Q: What happens if a student breaks hostel rules?
-A: The student may be removed from accommodation.
+A: The student may be removed from the accommodation.
 
 Q: Who do students report maintenance issues to?
-A: The maintenance department.
+A: Students should report maintenance issues to the maintenance department.
 
 Q: What should a student do if something in their room breaks?
-A: Report it to the maintenance department for repair or assistance.
+A: The student should report it to the maintenance department for repair or assistance.
 
 Q: Is security provided in UNIMA hostels?
 A: Yes. Security is provided 24 hours a day with CCTV surveillance and security personnel.
@@ -56,10 +56,10 @@ Q: When do students move into hostels?
 A: Students usually move in on Sunday before the official Monday opening day.
 
 Q: What should students bring when moving into hostels?
-A: Students should bring beddings and personal belongings.
+A: Students should bring bedding and their personal belongings.
 
 Q: When do students vacate hostel rooms?
-A: Students vacate rooms on Saturday after the Friday closing of the semester or academic period.
+A: Students usually vacate their rooms on Saturday after the Friday closing of the semester or academic period.
 
 Q: Can students choose their roommate?
 A: No. Room allocation is random and system-based.
@@ -71,65 +71,64 @@ Q: What happens if a student does not pay accommodation fees on time?
 A: The student may lose hostel space or be denied access to accommodation.
 
 Q: Are accommodation fees refundable?
-A: No. Fees are not refundable if a student leaves or withdraws.
+A: No. Accommodation fees are not refundable if a student leaves or withdraws.
 
 Q: How safe is UNIMA accommodation?
-A: It is generally safe with 24-hour security, CCTV, and controlled access.
+A: UNIMA accommodation is generally safe because it has 24-hour security, CCTV, and controlled access.
 
-Q: Are electricity and water always available?
-A: They are available, but occasional interruptions may occur depending on supply.
+Q: Are electricity and water always available in the hostels?
+A: Electricity and water are available, but occasional interruptions may happen depending on supply.
 
-Q: Is there laundry support in hostels?
-A: No formal laundry service. Students usually wash their own clothes.
+Q: Is there laundry support in UNIMA hostels?
+A: No formal laundry service is provided. Students usually wash their own clothes.
 
 Q: Do students keep the same room every year?
-A: No. Students usually reapply each academic year.
+A: No. Students usually reapply for accommodation each academic year.
 
 Q: Why do students prefer campus accommodation?
-A: Because it is cheaper, closer to classes, has a school environment, easy access to libraries, and cafeteria services.
+A: Many students prefer campus accommodation because it is cheaper, closer to classes, offers a school environment, and provides easy access to libraries and cafeteria services.
 
 Q: What is the biggest advantage of campus accommodation?
-A: Better security, short distance to facilities, clean rooms, fewer disturbances, and no risk of eviction due to rent issues
+A: The main advantages are better security, short distance to university facilities, cleaner rooms, fewer disturbances, and less risk of eviction because of rent issues.
 
 Q: What do students do if they are not allocated campus accommodation?
 A: They stay in private hostels, flats, and rented houses in areas near campus.
 
 Q: Which areas are commonly used for private accommodation?
-A: Chikanda, Naisi, Mpondabwino, Tholo, and Malawi Housing Corporation (MHC) flats.
+A: Common areas include Chikanda, Naisi, Mpondabwino, Tholo, and Malawi Housing Corporation (MHC) flats.
 
 Q: Why is Chikanda popular for student accommodation?
-A: It is affordable, has local markets, and hosts a large student population of over 10,000 students.
+A: Chikanda is popular because it is affordable, has local markets, and has a large student population.
 
 Q: How far is Chikanda from campus?
-A: It is very close, about 5–10 minutes walking distance.
+A: Chikanda is very close to campus, about 5 to 10 minutes away on foot.
 
-Q: How far are other private areas from campus?
-A: Areas like MHC flats are farther, so students use transport such as buses or motorcycles.
+Q: How far are other private accommodation areas from campus?
+A: Areas such as MHC flats are farther from campus, so students usually use transport such as buses or motorcycles.
 
 Q: Are private hostels safe?
-A: They are generally safe, but students are responsible for their own safety and belongings.
+A: Private hostels are generally safe, but students are responsible for their own safety and belongings.
 
 Q: What type of rooms are available in private hostels?
-A: Rooms can be single, double, or triple, but most commonly are double rooms.
+A: Private hostels may offer single, double, or triple rooms, but double rooms are the most common.
 
 Q: How do students pay rent in private hostels?
-A: Rent is paid directly to landlords, usually in cash or bank transfer. There is no university involvement.
+A: Students pay rent directly to landlords, usually in cash or by bank transfer. The university is not involved in these payments.
 
 Q: Are private hostels cheaper than campus accommodation?
-A: It depends on location and personal needs, but Chikanda is generally cheaper.
+A: It depends on the location and the student's needs, but accommodation in Chikanda is generally cheaper.
 
 Q: Do private hostels have electricity and water?
-A: It depends on cost. Higher-cost places are more reliable than cheaper ones.
+A: It depends on the cost. Higher-cost places are usually more reliable than cheaper ones.
 
 Q: Do private hostels have rules like curfew?
-A: It depends on the landlord. Some have strict rules, others are flexible.
+A: It depends on the landlord. Some private hostels have strict rules, while others are more flexible.
 
 Q: What problems do students face in private accommodation?
-A: Theft and safety risks are common. Students must take care of their belongings and are advised to stay in groups in some areas.
+A: Common problems include theft and safety risks. Students are advised to take care of their belongings and, in some areas, to move in groups.
 
 Q: Why do students prefer campus accommodation over private housing?
-A: Campus offers security, short distance, structured environment, library access, cafeteria services, and fewer financial risks.
+A: Students often prefer campus accommodation because it offers better security, a shorter distance to facilities, a more structured environment, access to the library and cafeteria, and fewer financial risks.
 
-Q: Do students need transport from private areas?
-A: It depends. Chikanda is walkable, while farther areas use motorcycles or buses.
-
+Q: Do students need transport from private accommodation areas?
+A: It depends on the area. Chikanda is within walking distance, while students in farther areas usually use motorcycles or buses.
