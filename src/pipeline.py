@@ -25,8 +25,7 @@ OUT_OF_SCOPE_MESSAGE = (
     "If you want, ask me another UNIMA student services question, or check with the university office for the most accurate update."
 )
 TUITION_CLARIFICATION_MESSAGE = (
-    "UNIMA tuition fees vary by programme and student category. Tell me:\n\n"
-    "* your programme/course\n"
+    "UNIMA tuition fees vary by study level and student category. Tell me:\n\n"
     "* undergraduate or postgraduate\n"
     "* government-sponsored or self-sponsored\n\n"
     "and I'll help check the fee structure for you."
@@ -162,6 +161,57 @@ class RAGPipeline:
             return match.group(1).strip()
         return None
 
+    def _parse_fee_faq_entries(self) -> List[Dict[str, str]]:
+        fee_path = Path(self.data_dir) / "fees_Structure.txt"
+        if not fee_path.exists():
+            return []
+
+        text = fee_path.read_text(encoding="utf-8")
+        matches = re.findall(
+            r"Q:\s*(.*?)\s*A:\s*(.*?)(?=\n\s*Q:|\Z)",
+            text,
+            flags=re.DOTALL,
+        )
+        return [
+            {
+                "question": " ".join(question.split()),
+                "answer": answer.strip(),
+            }
+            for question, answer in matches
+        ]
+
+    def _try_fee_file_match(self, question: str) -> Optional[str]:
+        tokens = self._tokenize(question)
+        fee_terms = {"fee", "fees", "tuition", "payment", "payments", "cost", "costs"}
+        if not tokens & fee_terms:
+            return None
+
+        generic_terms = fee_terms | {
+            "unima", "university", "malawi", "request", "student", "details",
+            "available", "structure", "clarify", "missing", "category",
+            "necessary", "paid", "pay", "programme", "program", "course",
+            "undergraduate", "postgraduate", "malawian", "international",
+            "government", "self", "sponsored", "use",
+        }
+        query_terms = tokens - generic_terms
+        if not query_terms:
+            return None
+
+        best_answer = None
+        best_score = 0
+        for entry in self._parse_fee_faq_entries():
+            entry_terms = self._tokenize(f"{entry['question']} {entry['answer']}")
+            score = len(query_terms & entry_terms)
+            if score > best_score:
+                best_score = score
+                best_answer = entry["answer"]
+
+        required_score = 1 if len(query_terms) <= 2 else 2
+        if best_score >= required_score:
+            return best_answer
+
+        return None
+
     def _try_fast_faq_match(self, question: str, retrieved_docs: List) -> Optional[str]:
         normalized_question = self._normalize_question(question)
         for doc in retrieved_docs:
@@ -177,8 +227,10 @@ class RAGPipeline:
         fee_terms = {"fee", "fees", "tuition", "payment", "payments", "cost", "costs"}
         detail_terms = {
             "programme", "program", "course", "undergraduate", "postgraduate",
-            "masters", "master", "phd", "dba", "mba", "bsc", "government",
-            "self", "sponsored", "international", "malawian", "year",
+            "masters", "master", "phd", "dba", "mba", "bsc", "bachelor",
+            "bachelors", "degree", "education", "science", "computer",
+            "business", "management", "government", "self", "sponsored",
+            "international", "malawian", "year",
         }
         query_tokens = self._tokenize(normalized)
         has_fee_term = bool(query_tokens & fee_terms)
@@ -468,6 +520,19 @@ class RAGPipeline:
         exact_answer = self._try_fast_faq_match(question, retrieved_docs)
         if exact_answer:
             response = {"answer": exact_answer}
+            if return_sources:
+                response["sources"] = [
+                    {
+                        "content": doc.page_content[:200] + "...",
+                        "metadata": doc.metadata,
+                    }
+                    for doc in retrieved_docs
+                ]
+            return response
+
+        fee_answer = self._try_fee_file_match(question)
+        if fee_answer:
+            response = {"answer": fee_answer}
             if return_sources:
                 response["sources"] = [
                     {

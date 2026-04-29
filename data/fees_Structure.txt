@@ -1,3 +1,14 @@
+Q: What fee information is available in the UNIMA fee structure?
+A: The current UNIMA fee structure contains these fee categories:
+- Application fee: Malawian Nationals - MWK 46,800; International Students - USD 30
+- Enrollment fee: Malawian Nationals - MWK 315,000; International Students - USD 250
+- Undergraduate tuition
+- Postgraduate master's tuition
+- Doctorate tuition listed in this file: PhD / DBA programmes
+- Technology fee: charged per subject
+- Bank payment details: Standard Bank of Malawi, Account Name - Astria Learning Limited, Account Number - 9100007260609
+- Important note: tuition and other fees may change without prior notice.
+
 Q: What is the application fee for University of Malawi programmes?
 A: The application fee is:
 - Malawian Nationals: MWK 46,800
@@ -8,20 +19,30 @@ A: The enrollment fee is:
 - Malawian Nationals: MWK 315,000
 - International Students: USD 250
 
-Q: How much are undergraduate tuition fees for Bachelor of Science (BSc) in Business Management?
-A: The undergraduate tuition fees for Bachelor of Science (BSc) in Business Management are charged per month as follows:
+Q: How much are undergraduate tuition fees at UNIMA?
+A: Undergraduate tuition fees are charged per month as follows:
 - Year 1: Malawian Nationals - MWK 208,800; International Students - USD 165
 - Year 2: Malawian Nationals - MWK 208,800; International Students - USD 185
 - Year 3: Malawian Nationals - MWK 208,800; International Students - USD 185
 - Year 4: Malawian Nationals - MWK 208,800; International Students - USD 185
+
+Q: How much are undergraduate tuition fees for Bachelor of Education in Computer Science?
+A: Undergraduate tuition fees are not answered by programme in this knowledge base. Use the undergraduate fee level instead:
+- Year 1: Malawian Nationals - MWK 208,800; International Students - USD 165
+- Year 2: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 3: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 4: Malawian Nationals - MWK 208,800; International Students - USD 185
+
+Q: What should the assistant say if a student asks for fees by programme?
+A: Explain that this fee structure answers tuition by study level, not by individual programme. Ask whether the student is undergraduate, postgraduate master's, or doctorate, then provide the matching fee amount.
 
 Q: Is there a technology fee?
 A: Yes. The technology fee is charged per subject:
 - Malawian Nationals: MWK 19,800 per subject
 - International Students: USD 10 per subject
 
-Q: What are the postgraduate tuition fees for master's programmes?
-A: The postgraduate tuition fees for master's programmes (MBA / MSc) are charged per month as follows:
+Q: What are the postgraduate master's tuition fees at UNIMA?
+A: Postgraduate master's tuition fees are charged per month as follows:
 - Year 1: MWK 243,000; International Students - USD 190
 - Year 2: MWK 261,000; International Students - USD 225
 
