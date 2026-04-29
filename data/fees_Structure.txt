@@ -57,3 +57,6 @@ A: If a student asks a broad question such as "How much are fees at UNIMA?", exp
 - their programme or course
 - whether they are undergraduate or postgraduate
 - whether they are government-sponsored or self-sponsored
+
+Q: Thank you
+A: Welcome feel free to ask me any questions about UNIMA 
