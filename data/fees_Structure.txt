@@ -74,10 +74,9 @@ Q: Where can students confirm updated fees?
 A: Students are encouraged to contact the University administration or visit the official University of Malawi E-Campus website for the latest updates.
 
 Q: How should the assistant respond when a student asks a broad tuition-fee question?
-A: If a student asks a broad question such as "How much are fees at UNIMA?", explain that UNIMA tuition fees vary by programme and student category. Then ask the student for:
-- their programme or course
-- whether they are undergraduate or postgraduate
-- whether they are government-sponsored or self-sponsored
+A: If a student asks a broad question such as "How much are fees at UNIMA?", explain that UNIMA tuition fees vary by study level and student category. Then ask the student for:
+- whether they are undergraduate, postgraduate master's, or doctorate
+- whether they are a Malawian national or international student
 
 Q: Thank you
 A: Welcome feel free to ask me any questions about UNIMA 

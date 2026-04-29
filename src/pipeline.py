@@ -27,7 +27,7 @@ OUT_OF_SCOPE_MESSAGE = (
 TUITION_CLARIFICATION_MESSAGE = (
     "UNIMA tuition fees vary by study level and student category. Tell me:\n\n"
     "* undergraduate or postgraduate\n"
-    "* government-sponsored or self-sponsored\n\n"
+    "* Malawian national or international student\n\n"
     "and I'll help check the fee structure for you."
 )
 CONVERSATIONAL_RESPONSES = {
@@ -190,17 +190,24 @@ class RAGPipeline:
             "unima", "university", "malawi", "request", "student", "details",
             "available", "structure", "clarify", "missing", "category",
             "necessary", "paid", "pay", "programme", "program", "course",
-            "undergraduate", "postgraduate", "malawian", "international",
-            "government", "self", "sponsored", "use",
+            "malawian", "international", "government", "self", "sponsored",
+            "use", "how", "much",
         }
         query_terms = tokens - generic_terms
+        if "masters" in query_terms:
+            query_terms.add("master")
         if not query_terms:
             return None
 
         best_answer = None
         best_score = 0
         for entry in self._parse_fee_faq_entries():
+            entry_question = entry["question"].lower()
+            if "assistant" in entry_question or "what fee information is available" in entry_question:
+                continue
             entry_terms = self._tokenize(f"{entry['question']} {entry['answer']}")
+            if "masters" in entry_terms:
+                entry_terms.add("master")
             score = len(query_terms & entry_terms)
             if score > best_score:
                 best_score = score
