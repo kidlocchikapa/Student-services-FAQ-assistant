@@ -61,16 +61,17 @@ def _teach_interactively(pipeline: RAGPipeline) -> None:
 def _contains_fee_terms(text: str) -> bool:
     return bool(
         re.search(
-            r"\b(fee|fees|tuition|cost|costs|payment|payments|sponsored|undergraduate|postgraduate)\b",
+            r"\b(fee|fees|tuition|cost|costs|payment|payments|sponsored|undergraduate|postgraduate|bachelor|bachelors|degree|programme|program|course)\b",
             text.lower(),
         )
     )
 
 
-def _expand_follow_up_query(query: str) -> str:
+def _expand_follow_up_query(query: str, details: list[str] | None = None) -> str:
+    combined_details = " ".join([*(details or []), query]).strip()
     return (
         "UNIMA tuition fees request. Student details: "
-        f"{query}. "
+        f"{combined_details}. "
         "Use the available fee structure and clarify any missing category only if necessary."
     )
 
@@ -82,6 +83,7 @@ def interactive_mode(pipeline: RAGPipeline):
     print("=" * 50)
     print("Type 'help' for commands or 'quit' to stop\n")
     awaiting_fee_details = False
+    fee_detail_buffer = []
 
     while True:
         try:
@@ -109,11 +111,16 @@ def interactive_mode(pipeline: RAGPipeline):
                 continue
 
             effective_query = query
-            if awaiting_fee_details and not _contains_fee_terms(query):
-                effective_query = _expand_follow_up_query(query)
+            if awaiting_fee_details:
+                fee_detail_buffer.append(query)
+                effective_query = _expand_follow_up_query(query, fee_detail_buffer[:-1])
+            elif _contains_fee_terms(query):
+                fee_detail_buffer = [query]
 
             response = pipeline.query(effective_query, return_sources=False)
             awaiting_fee_details = response["answer"].strip() == TUITION_CLARIFICATION_MESSAGE.strip()
+            if not awaiting_fee_details:
+                fee_detail_buffer = []
 
             print(f"\nAssistant: {response['answer']}")
 
