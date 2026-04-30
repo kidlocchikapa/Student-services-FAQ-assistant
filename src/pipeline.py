@@ -1,9 +1,3 @@
-"""
-RAG Pipeline Orchestration
-===========================
-Main pipeline that ties together all RAG components.
-"""
-
 import hashlib
 import json
 import logging
