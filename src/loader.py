@@ -3,19 +3,54 @@ Document Loader and Chunker
 ===========================
 """
 
+import re
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Sequence
 from langchain_community.document_loaders import (
     TextLoader,
     PyPDFLoader,
     WebBaseLoader,
-    DirectoryLoader
 )
-from langchain.text_splitter import (
+from langchain_core.documents import Document
+from langchain_text_splitters import (
     RecursiveCharacterTextSplitter,
     MarkdownHeaderTextSplitter,
     TokenTextSplitter
 )
+
+
+def _parse_faq_text(file_path: Path) -> List[Document]:
+    """Convert a plain-text FAQ file into one document per Q/A pair."""
+    text = file_path.read_text(encoding="utf-8")
+    text = text.replace("\u2013", "-")
+    text = re.sub(r"(?m)^Q\d+\s*:", "Q:", text)
+
+    matches = re.findall(
+        r"Q:\s*(.*?)\s*A:\s*(.*?)(?=\n\s*Q:|\Z)",
+        text,
+        flags=re.DOTALL,
+    )
+
+    if not matches:
+        return []
+
+    documents = []
+    for index, (question, answer) in enumerate(matches):
+        clean_question = " ".join(question.split())
+        clean_answer = " ".join(answer.split())
+        documents.append(
+            Document(
+                page_content=f"Question: {clean_question}\nAnswer: {clean_answer}",
+                metadata={
+                    "source": str(file_path),
+                    "doc_type": "faq_pair",
+                    "faq_index": index,
+                    "question": clean_question,
+                },
+            )
+        )
+
+    return documents
 
 
 def load_documents(data_dir: str = "data/") -> List:
@@ -26,8 +61,12 @@ def load_documents(data_dir: str = "data/") -> List:
     path = Path(data_dir)
     documents = []
 
-    # Basic text file loading - extend this for your scenario
     for file_path in path.glob("*.txt"):
+        parsed_faq = _parse_faq_text(file_path)
+        if parsed_faq:
+            documents.extend(parsed_faq)
+            continue
+
         loader = TextLoader(str(file_path), encoding="utf-8")
         documents.extend(loader.load())
 
@@ -35,6 +74,23 @@ def load_documents(data_dir: str = "data/") -> List:
     # for pdf_path in path.glob("*.pdf"):
     #     loader = PyPDFLoader(str(pdf_path))
     #     documents.extend(loader.load())
+
+    return documents
+
+
+def load_web_documents(urls: Sequence[str]) -> List[Document]:
+    """Load documents from official web pages for fallback retrieval."""
+    if not urls:
+        return []
+
+    loader = WebBaseLoader(list(urls))
+    documents = loader.load()
+
+    for doc in documents:
+        text = re.sub(r"\s+", " ", doc.page_content).strip()
+        doc.page_content = text
+        doc.metadata["source_type"] = "web"
+        doc.metadata.setdefault("source", doc.metadata.get("source", "web"))
 
     return documents
 
@@ -53,6 +109,9 @@ def chunk_documents(
     - Try different text splitters (Markdown, Token-based)
     - Add metadata to chunks (source, page number, etc.)
     """
+    if all(doc.metadata.get("doc_type") == "faq_pair" for doc in documents):
+        return documents
+
     if chunking_strategy == "recursive":
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
