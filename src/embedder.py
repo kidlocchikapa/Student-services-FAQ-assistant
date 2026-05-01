@@ -1,7 +1,7 @@
 """
 Embedding Model
 ===============
-Students must choose and configure the embedding model.
+Students must choose and configure th embedding model.
 """
 
 from typing import List, Optional
