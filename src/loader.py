@@ -1,148 +1,176 @@
 """
-Document Loader and Chunker
+RAG Pipeline Orchestration
 ===========================
+Main pipeline that ties together all RAG components.
 """
 
+import hashlib
+import json
+import logging
 import re
+from typing import List, Optional, Dict, Sequence
 from pathlib import Path
-from typing import List, Sequence
-from langchain_community.document_loaders import (
-    TextLoader,
-    PyPDFLoader,
-    WebBaseLoader,
+
+from langchain_community.vectorstores import Chroma
+
+from .loader import load_documents, chunk_documents, load_web_documents
+from .embedder import get_embedder
+from .retriever import create_vectorstore, get_retriever
+from .generator import get_llm, create_rag_prompt, create_qa_chain, generate_response
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+OUT_OF_SCOPE_MESSAGE = (
+    "I want to help, but I do not have that information in my current UNIMA knowledge base yet. "
+    "If you want, ask me another UNIMA student services question, or check with the university office."
 )
-from langchain_core.documents import Document
-from langchain_text_splitters import (
-    RecursiveCharacterTextSplitter,
-    MarkdownHeaderTextSplitter,
-    TokenTextSplitter
+
+TUITION_CLARIFICATION_MESSAGE = (
+    "UNIMA tuition fees vary by study level and student category. Tell me:\n"
+    "- undergraduate or postgraduate\n"
+    "- Malawian or international student\n"
 )
 
+CONVERSATIONAL_RESPONSES = {
+    "hello": "Hello 👋 I'm here to help with UNIMA questions.",
+    "hi": "Hi 👋 Ask me anything about UNIMA student services.",
+    "thanks": "You're welcome 👍",
+    "thank you": "You're welcome 👍",
+}
 
-def _parse_faq_text(file_path: Path) -> List[Document]:
-    """Convert a plain-text FAQ file into one document per Q/A pair."""
-    text = file_path.read_text(encoding="utf-8")
-    text = text.replace("\u2013", "-")
-    text = re.sub(r"(?m)^Q\d+\s*:", "Q:", text)
 
-    matches = re.findall(
-        r"Q:\s*(.*?)\s*A:\s*(.*?)(?=\n\s*Q:|\Z)",
-        text,
-        flags=re.DOTALL,
+class RAGPipeline:
+
+    def __init__(
+        self,
+        data_dir: str = "data/",
+        embedder_provider: str = "ollama",
+        embedder_model: str = "nomic-embed-text",
+        llm_provider: str = "ollama",
+        llm_model: str = "phi3:latest",   # ✅ FIXED (comma added here)
+        chunk_size: int = 500,
+        chunk_overlap: int = 50,
+        retrieval_k: int = 4,
+        vectorstore_type: str = "chroma",
+        persist_dir: Optional[str] = "vectorstore",
+        enable_web_fallback: bool = False,
+        web_fallback_urls: Optional[Sequence[str]] = None,
+    ):
+        self.data_dir = data_dir
+        self.chunk_size = chunk_size
+        self.chunk_overlap = chunk_overlap
+        self.retrieval_k = retrieval_k
+        self.vectorstore_type = vectorstore_type
+        self.persist_dir = persist_dir
+        self.enable_web_fallback = enable_web_fallback
+        self.web_fallback_urls = list(web_fallback_urls or [])
+
+        logger.info("Loading embedder...")
+        self.embedder = get_embedder(
+            provider=embedder_provider,
+            model_name=embedder_model
+        )
+
+        logger.info("Loading LLM...")
+        self.llm = get_llm(
+            provider=llm_provider,
+            model_name=llm_model
+        )
+
+        self.vectorstore = None
+        self.retriever = None
+        self.qa_chain = None
+
+    # -------------------------
+    # BASIC CLEANING
+    # -------------------------
+    def _normalize(self, text: str) -> str:
+        return re.sub(r"\s+", " ", text.lower().strip())
+
+    def _chat_response(self, question: str) -> Optional[str]:
+        q = self._normalize(question)
+        return CONVERSATIONAL_RESPONSES.get(q)
+
+    # -------------------------
+    # LOAD & INDEX
+    # -------------------------
+    def load_and_index(self):
+        logger.info("Loading documents...")
+
+        docs = load_documents(self.data_dir)
+        chunks = chunk_documents(docs, self.chunk_size, self.chunk_overlap)
+
+        logger.info(f"Chunks created: {len(chunks)}")
+
+        self.vectorstore = create_vectorstore(
+            chunks,
+            self.embedder,
+            db_type=self.vectorstore_type,
+            persist_dir=self.persist_dir
+        )
+
+        self.retriever = get_retriever(self.vectorstore, k=self.retrieval_k)
+
+        prompt = create_rag_prompt()
+        self.qa_chain = create_qa_chain(self.llm, self.retriever, prompt)
+
+        logger.info("Indexing complete ✅")
+
+    # -------------------------
+    # QUERY
+    # -------------------------
+    def query(self, question: str, return_sources: bool = True) -> Dict:
+
+        if self.qa_chain is None:
+            raise RuntimeError("Run load_and_index() first")
+
+        # 1. chat response first
+        chat = self._chat_response(question)
+        if chat:
+            return {"answer": chat, "sources": []}
+
+        # 2. retrieve docs
+        docs = self.retriever.invoke(question)
+
+        if not docs:
+            return {"answer": OUT_OF_SCOPE_MESSAGE, "sources": []}
+
+        # 3. generate answer
+        result = generate_response(
+            self.qa_chain,
+            question,
+            docs,
+            return_sources
+        )
+
+        return result
+
+
+# -------------------------
+# RUN TEST
+# -------------------------
+def main():
+    pipeline = RAGPipeline(
+        data_dir="data/",
+        llm_model="phi3:latest",
+        retrieval_k=4
     )
 
-    if not matches:
-        return []
+    pipeline.load_and_index()
 
-    documents = []
-    for index, (question, answer) in enumerate(matches):
-        clean_question = " ".join(question.split())
-        clean_answer = " ".join(answer.split())
-        documents.append(
-            Document(
-                page_content=f"Question: {clean_question}\nAnswer: {clean_answer}",
-                metadata={
-                    "source": str(file_path),
-                    "doc_type": "faq_pair",
-                    "faq_index": index,
-                    "question": clean_question,
-                },
-            )
-        )
+    questions = [
+        "What programs does UNIMA offer?",
+        "How do I apply?",
+        "How can I get a room on campus?"
+    ]
 
-    return documents
-
-
-def load_documents(data_dir: str = "data/") -> List:
-    """
-    Load documents from the data directory.
-    TODO: Extend to support more file types (PDF, HTML, etc.)
-    """
-    path = Path(data_dir)
-    documents = []
-
-    for file_path in path.glob("*.txt"):
-        parsed_faq = _parse_faq_text(file_path)
-        if parsed_faq:
-            documents.extend(parsed_faq)
-            continue
-
-        loader = TextLoader(str(file_path), encoding="utf-8")
-        documents.extend(loader.load())
-
-    # TODO: Add PDF loader
-    # for pdf_path in path.glob("*.pdf"):
-    #     loader = PyPDFLoader(str(pdf_path))
-    #     documents.extend(loader.load())
-
-    return documents
-
-
-def load_web_documents(urls: Sequence[str]) -> List[Document]:
-    """Load documents from official web pages for fallback retrieval."""
-    if not urls:
-        return []
-
-    loader = WebBaseLoader(list(urls))
-    documents = loader.load()
-
-    for doc in documents:
-        text = re.sub(r"\s+", " ", doc.page_content).strip()
-        doc.page_content = text
-        doc.metadata["source_type"] = "web"
-        doc.metadata.setdefault("source", doc.metadata.get("source", "web"))
-
-    return documents
-
-
-def chunk_documents(
-    documents: List,
-    chunk_size: int = 500,
-    chunk_overlap: int = 50,
-    chunking_strategy: str = "recursive"
-) -> List:
-    """
-    Split documents into chunks.
-
-    Students MUST modify this function:
-    - Experiment with different chunk sizes
-    - Try different text splitters (Markdown, Token-based)
-    - Add metadata to chunks (source, page number, etc.)
-    """
-    if all(doc.metadata.get("doc_type") == "faq_pair" for doc in documents):
-        return documents
-
-    if chunking_strategy == "recursive":
-        splitter = RecursiveCharacterTextSplitter(
-            chunk_size=chunk_size,
-            chunk_overlap=chunk_overlap,
-            separators=["\n\n", "\n", " ", ""]
-        )
-    elif chunking_strategy == "markdown":
-        headers_to_split_on = [
-            ("#", "Header 1"),
-            ("##", "Header 2"),
-            ("##", "Header 3"),
-        ]
-        splitter = MarkdownHeaderTextSplitter(headers_to_split_on)
-    elif chunking_strategy == "token":
-        splitter = TokenTextSplitter(
-            chunk_size=chunk_size,
-            chunk_overlap=chunk_overlap
-        )
-    else:
-        raise ValueError(f"Unknown chunking strategy: {chunking_strategy}")
-
-    chunks = splitter.split_documents(documents)
-
-    # TODO: Add custom chunk metadata
-    # for i, chunk in enumerate(chunks):
-    #     chunk.metadata["chunk_id"] = i
-
-    return chunks
+    for q in questions:
+        print("\nQ:", q)
+        print("A:", pipeline.query(q)["answer"])
 
 
 if __name__ == "__main__":
-    docs = load_documents()
-    chunks = chunk_documents(docs)
-    print(f"Loaded {len(docs)} documents, created {len(chunks)} chunks")
+    main()
