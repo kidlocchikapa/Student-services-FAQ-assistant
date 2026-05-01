@@ -1,0 +1,23 @@
+Q: Where is the UNIMA library located?
+A: The main library is located at the centre of the Chancellor College campus in Zomba.
+
+Q: What are the library opening hours?
+A: The library is open Monday to Friday from 8:00 AM to 10:00 PM, and Saturday from 8:00 AM to 5:00 PM. It is closed on Sundays and public holidays.
+
+Q: How many books can a student borrow at a time?
+A: Undergraduate students can borrow up to 4 books at a time, while postgraduate students can borrow up to 6 books.
+
+Q: How long can I keep a borrowed book?
+A: Books can be borrowed for up to 2 weeks and can be renewed once if no one else has requested the book.
+
+Q: What happens if I return a book late?
+A: A fine is charged for every day a book is overdue. Repeated late returns may result in borrowing privileges being suspended.
+
+Q: Does the library have internet access?
+A: Yes, the library provides free Wi-Fi and has computer workstations available for student use.
+
+Q: Can I access library resources online?
+A: Yes, UNIMA students can access e-books, journals, and research databases online through the library portal using their student credentials.
+
+Q: Can I make a photocopy of library materials?
+A: Yes, the library has photocopying services available at a small fee per page.
