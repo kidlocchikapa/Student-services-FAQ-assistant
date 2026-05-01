@@ -1,2 +1,60 @@
 Q: Where is chirunga hostel ?
 A: its next to the tennis court that is behind the comp
+
+Q: Where is kenyata hostel?
+A: its adjacent to chirunga hostel
+
+Q: where is chingwe hostel?
+A: its in front of kenyata hostel
+
+Q: Where is Tchaka hostel?
+A: its in front of chingwe hostel
+
+Q:Where is Mberwa hostel ?
+A: its behind Tchaka hostel
+
+Q: Where is Khondowe hostel ?
+A: It is behind Mberwa hostel
+
+Q: Where is Shakespere hostel?
+A: it is after kenyata, adjacent to Tchaka, and neighbouring with Mberwa.
+
+Q: Where is Mulunguzi hostel ?
+A: It is behind Shakespere, and adjacent to Khondowe
+
+Q: Where is sangala hostel?
+A: Its where the road from comp down to chirunga hostel ends.
+
+Q: Where is kachere Hostel ?
+A: it is in front of chirunga hostel, the otherside of the road
+
+Q: Where is Beittrust hostel?
+A: It is in front from the kachere hostel
+
+Q: Where is gweru hostel?
+A:
+
+Q: Where is Kamuzu hostel?
+A: it is adjacent to gweru hostel, or you can find it after going up the 77 steps.
+
+Q: Where is umodzi hostel ?
+A: umodzi hostel is the tallest hostel on campus, it is located behind the cafeteria carpark.
+
+Q: Where is Chilembwe hostel?
+A: it is in front of umodzi hostel.
+
+Q: where is lubani hostel?
+A: it is located behind Chilembwe hostel.
+
+Q: where is Dunduzu hostel ?
+A: It is located behind lubani hostel.
+
+Q: Where is kanjedza hostel? 
+A: it is located behind lubani and next to Dunduzu
+
+Q: Where is Makata hostel ? 
+A: it is located next to kanjedza hostel and behind mumba hostel
+
+Q: Where is Mumba hostel
+A: it is located adjacent to lubani hostel.
+
