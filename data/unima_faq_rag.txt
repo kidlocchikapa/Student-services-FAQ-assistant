@@ -4,7 +4,7 @@ Q: What is the University of Malawi?
 A: The University of Malawi (UNIMA) is one of the oldest higher education institutions in Malawi. It was established in 1965.
 
 Q: Where is UNIMA located?
-A: UNIMA's main campus is in Zomba. The university also has other campuses in Malawi, including Blantyre.
+A: The University is located in Zomba, the capital city of Malawi. The University and the city have become so intertwined over teh years that the city is now seen as a University town. Zomba is a short drive from blantyre, Malawi's largest commercial city. Being located in the city it means students have easy access to various shops, and also take timie to visit the famous Zomba mountain.
 
 Q: What programs does UNIMA offer?
 A: UNIMA offers undergraduate and postgraduate programmes in fields such as education, humanities, science, business, and law.
@@ -16,7 +16,9 @@ Q: How can students apply?
 A: Students can apply through the central university selection system or through official UNIMA application channels.
 
 Q: Does UNIMA offer accommodation?
-A: Yes. UNIMA offers limited on-campus accommodation. Allocation is based on criteria such as distance and need.
+A: All students are accepted on non-residential basis. Students have to apply for the limited number of University run rooms in a number of hostels. Room allocation is done through a random mechanism, with preference only given to students with disabilities. If students are unable to secure University accommodation, they are free to apply for accommodation at several surrounding privately owned flats and houses.
+
+
 
 Q: What is the academic year structure?
 A: The academic year is divided into two semesters.
@@ -27,5 +29,24 @@ A: Some programmes and courses offer blended or online learning options, dependi
 Q: What facilities are available?
 A: UNIMA provides libraries, laboratories, ICT services, and student support services.
 
+Q: What kind of Qualification does university of malawi offer?
+A: There are a variety of programmes offered by the different faculties at University of Malawi. The main qualifications offered are Bachelor’s degrees in a range of disciplines. These programmes normally take 4 years to complete. Additionally, the various faculties and departments also offer a range of postgraduate programmes, both at Masters and PhD level. Finally, there are also opportunities to enrol for short training courses in a number of areas, upon completion of which candidates are awarded certificates.
+
 Q: How can students contact the university?
 A: Students can contact UNIMA through official channels such as email, phone, or the university website.
+
+Q: Does UNIMA provide food for students?
+A: No, but there are a number of places that offer food on campus. The main dining facility is the University cafeteria. Students may purchase food here at an affordable price. However, there are other privately run restaurants around campus.
+
+Q: How can I contact UNiversity of Malawi
+A: The main location for getting in touch with University of Malawi management is the University website https://unima.ac.mw. Additionally, interested parties can contact the Registrar at registrar@unima.ac.mw. The University reception can be reached telephonically at (265)1-524-222.
+
+Q: Can a student with disability be enrolled at UNIMA?
+A: Yes. University of Malawi is one of the few institutions of higher learning in Malawi that accommodates students with disabilities. Over the recent years, the University has seen a change in infrastructure aimed at improving accessibility for students with physical disabilities. The University also features a Special Needs centre, which is aimed at ensuring that students with disabilities are not disadvantaged in access to information. Among other things, this special needs centre ensures the production of materials in Braille for students with visual impairment. Additionally, staff and students are sensitized on ways in which they can avoid discrimination against students with disabilities.
+
+Q: What time do lectures start at unima?
+A: The official periods of operation at University of Malawi are from 7.30am to 4.30pm, from Monday to Friday. However, the University also offers a number of weekend courses. Additionally, staff and students can arrange for lectures and discussions outside these hours.
+
+Q: Can I access counselling services at UNIMA?
+A: Yes. University of Malawi management realises that he rigors of academic and social life can result in all forms of stress. Counselling services can be accessed at three different locations. Students can consult the University Chaplain to discuss any matter, especially those of a spiritual nature. Additionally, students are free to consult the Dean of Students to discuss any issue pertaining to their welfare. Finally, the Psychology Department offers counselling services for any students that may be suffering from any form of mental anguish. These offices are available for students who have problems emanating from any aspect of their lives at University of Malawi. 
+
