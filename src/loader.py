@@ -56,7 +56,7 @@ def _parse_faq_text(file_path: Path) -> List[Document]:
 def load_documents(data_dir: str = "data/") -> List:
     """
     Load documents from the data directory.
-    TODO: Extend to support more file types (PDF, HTML, etc.)
+    Supports plain-text FAQ files and PDFs.
     """
     path = Path(data_dir)
     documents = []
@@ -70,10 +70,13 @@ def load_documents(data_dir: str = "data/") -> List:
         loader = TextLoader(str(file_path), encoding="utf-8")
         documents.extend(loader.load())
 
-    # TODO: Add PDF loader
-    # for pdf_path in path.glob("*.pdf"):
-    #     loader = PyPDFLoader(str(pdf_path))
-    #     documents.extend(loader.load())
+    for pdf_path in path.glob("*.pdf"):
+        loader = PyPDFLoader(str(pdf_path))
+        pdf_documents = loader.load()
+        for doc in pdf_documents:
+            doc.metadata["source"] = str(pdf_path)
+            doc.metadata["doc_type"] = "pdf"
+        documents.extend(pdf_documents)
 
     return documents
 

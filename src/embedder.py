@@ -83,7 +83,6 @@ def get_embedder(
     else:
         raise ValueError(f"Unknown provider: {provider}")
 
-
 def embed_documents(embedder, documents: List) -> List[List[float]]:
     texts = [doc.page_content for doc in documents]
     return embedder.embed_documents(texts)

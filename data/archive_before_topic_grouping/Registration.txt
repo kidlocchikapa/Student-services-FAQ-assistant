@@ -1,17 +1,14 @@
-
-
 Q: When does registration at the University of Malawi (UNIMA) take place?
 A: Registration starts in the first week of each semester and runs for a period of two weeks. Students must register within this period to be fully recognized as active students.
 
 Q: How do students register at UNIMA?
-A: Registration is done through the UNIMA student portal at https://portal.unima.ac.mw/students/
-. Students log in using their username and password and complete the registration process online.
+A: Registration is done through the UNIMA student portal at https://portal.unima.ac.mw/students/. Students log in using their username and password and complete the registration process online.
 
 Q: Is UNIMA registration done manually or online?
 A: Registration is fully online through the student portal and the system automatically updates student status once payment is confirmed.
 
 Q: What payment is required before registration at UNIMA?
-A: Students must pay a minimum of approximately MK11,500 before they are allowed to access and complete registration.
+A: Students must pay a minimum of approximately MK12,000 before they are allowed to access and complete registration.
 
 Q: What happens after paying the registration fee at UNIMA?
 A: Once payment is confirmed, the system automatically activates registration access within seconds, allowing the student to register through the portal.
@@ -36,3 +33,27 @@ A: No. Registration is automatic. Once payment is confirmed, the system immediat
 
 Q: What changes after a student completes registration at UNIMA?
 A: Registered students gain full access to their timetable, are included in official class lists, and are fully recognized in academic systems.
+
+Q: What happens if I miss the registration deadline?
+A: You may register during the late registration period with an additional fee. After that period, you will not be permitted to attend classes or sit exams until the next semester.
+
+Q: Can I register without paying fees?
+A: No. Full or agreed partial payment of fees is required before registration can be processed.
+
+Q: How do I know which courses to register for?
+A: Consult your program handbook and speak with your academic advisor or Head of Department for guidance on required and elective courses.
+
+Q: I lost my registration slip. What do I do?
+A: Visit the Registrar's Office with your student ID to request a duplicate registration slip.
+
+Q: Can I register for courses from another faculty?
+A: Cross-faculty registration is possible but requires written approval from both your Dean and the Dean of the host faculty.
+
+Q: What do I do if a course I need is full?
+A: Contact your Head of Department. In some cases, class capacity may be increased or an alternative section may be arranged.
+
+Q: How do I change my registered courses after registration?
+A: You may add or drop courses within the first two weeks of semester. Visit the Registrar's Office or use the student portal to make changes.
+
+Q: Who do I contact if I have problems with online registration?
+A: Contact the ICT Helpdesk or visit the Registrar's Office for assistance.

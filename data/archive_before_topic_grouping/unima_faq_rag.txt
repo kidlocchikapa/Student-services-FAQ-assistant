@@ -1,5 +1,3 @@
-University of Malawi (UNIMA) – FAQ Knowledge Base for RAG Systems
-
 Q: What is the University of Malawi?
 A: The University of Malawi (UNIMA) is one of the oldest higher education institutions in Malawi. It was established in 1965.
 
