@@ -23,6 +23,12 @@ rag-starter/
 pip install -r requirements.txt
 ```
 
+If you are using the included virtual environment on Windows, run:
+
+```bash
+venv\Scripts\python -m pip install -r requirements.txt
+```
+
 ### 2. Set Up Local LLM (Recommended)
 
 Install Ollama for local LLM inference:
@@ -55,21 +61,41 @@ Place your documents in the `data/` directory:
 # Interactive mode
 python main.py --mode interactive
 
+# Interactive mode with official web fallback
+python main.py --mode interactive --enable-web-fallback --web-url https://www.unima.ac.mw/
+
 # Demo mode
 python main.py --mode demo
 ```
 
-## Required Modifications
+In interactive mode, you can also use:
 
-**This is a scaffold - you MUST modify the following:**
+- `teach` to add a new Q/A pair to the local knowledge base and refresh the index
+- `refresh` to rebuild the vector index from the current files in `data/`
+- `help` to show the available commands
 
-| File | What to Modify |
-|------|----------------|
-| `src/loader.py` | Chunking strategy, file types |
-| `src/embedder.py` | Embedding model selection |
-| `src/retriever.py` | Retrieval parameters, hybrid search |
-| `src/generator.py` | Prompt template, LLM choice |
-| `src/pipeline.py` | Pipeline configuration, evaluation |
+## Hybrid RAG
+
+The assistant can optionally use official UNIMA web pages as a fallback source when the local `data/` knowledge base does not have enough information.
+
+Example:
+
+```bash
+python main.py --mode interactive --enable-web-fallback --web-url https://www.unima.ac.mw/
+```
+
+You can repeat `--web-url` to add more official pages:
+
+```bash
+python main.py --mode interactive --enable-web-fallback \
+  --web-url https://www.unima.ac.mw/ \
+  --web-url <another-official-unima-page>
+```
+
+Recommended usage:
+- Keep local FAQ files as the main approved source
+- Add only official UNIMA pages as web fallback URLs
+- Use web fallback especially for current or updated information
 
 ## Key Commands
 
@@ -83,6 +109,7 @@ python -m pytest
 
 ## Troubleshooting
 
+- **`ModuleNotFoundError: No module named 'langchain_community'`**: Your virtual environment is missing the project dependencies. Reinstall with `venv\Scripts\python -m pip install -r requirements.txt`
 - **No documents loaded**: Check `data/` directory contains valid files
 - **LLM not responding**: Ensure Ollama is running (`ollama serve`)
 - **Embedding errors**: Verify `sentence-transformers` installed correctly

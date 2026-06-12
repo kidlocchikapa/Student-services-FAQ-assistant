@@ -6,11 +6,7 @@ Students must implement and customize retrieval strategies.
 
 from typing import List, Optional, Dict
 from langchain_community.vectorstores import Chroma, FAISS
-from langchain.schema import Document
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import LLMChainExtractor
-from langchain.retrievers.self_query.base import SelfQueryRetriever
-from langchain.chains.query_constructor.base import AttributeInfo
+from langchain_classic.schema import Document
 
 
 def create_vectorstore(

@@ -1,0 +1,129 @@
+Q: What fee information is available in the UNIMA fee structure?
+A: The current UNIMA fee structure contains these fee categories:
+- Application fee: Malawian Nationals - MWK 46,800; International Students - USD 30
+- Enrollment fee: Malawian Nationals - MWK 315,000; International Students - USD 250
+- Undergraduate tuition
+- Postgraduate master's tuition
+- Doctorate tuition listed in this file: PhD / DBA programmes
+- Technology fee: charged per subject
+- Bank payment details: Standard Bank of Malawi, Account Name - Astria Learning Limited, Account Number - 9100007260609
+- Important note: tuition and other fees may change without prior notice.
+
+Q: What is the application fee for University of Malawi programmes?
+A: The application fee is:
+- Malawian Nationals: MWK 46,800
+- International Students: USD 30
+
+Q: What is the enrollment fee?
+A: The enrollment fee is:
+- Malawian Nationals: MWK 315,000
+- International Students: USD 250
+
+Q: How much are undergraduate tuition fees at UNIMA?
+A: Undergraduate tuition fees are charged per month as follows:
+- Year 1: Malawian Nationals - MWK 208,800; International Students - USD 165
+- Year 2: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 3: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 4: Malawian Nationals - MWK 208,800; International Students - USD 185
+
+Q: How much are undergraduate tuition fees for Bachelor of Education in Computer Science?
+A: Undergraduate tuition fees are not answered by programme in this knowledge base. Use the undergraduate fee level instead:
+- Year 1: Malawian Nationals - MWK 208,800; International Students - USD 165
+- Year 2: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 3: Malawian Nationals - MWK 208,800; International Students - USD 185
+- Year 4: Malawian Nationals - MWK 208,800; International Students - USD 185
+
+Q: What should the assistant say if a student asks for fees by programme?
+A: Explain that this fee structure answers tuition by study level, not by individual programme. Ask whether the student is undergraduate, postgraduate master's, or doctorate, then provide the matching fee amount.
+
+Q: Is there a technology fee?
+A: Yes. The technology fee is charged per subject:
+- Malawian Nationals: MWK 19,800 per subject
+- International Students: USD 10 per subject
+
+Q: What are the postgraduate master's tuition fees at UNIMA?
+A: Postgraduate master's tuition fees are charged per month as follows:
+- Year 1: MWK 243,000; International Students - USD 190
+- Year 2: MWK 261,000; International Students - USD 225
+
+Q: What are the doctorate programme tuition fees?
+A: The doctorate programme tuition fees for PhD / DBA programmes are charged per month as follows:
+- Year 1: MWK 360,000; International Students - USD 235-245
+- Year 2: MWK 378,000; International Students - USD 255-265
+- Year 3: MWK 378,000; International Students - USD 255-275
+
+Q: Can fees change?
+A: Yes. Tuition and other fees may change without prior notice.
+
+Q: Are repeated subjects charged separately?
+A: Yes. Students who repeat subjects are charged additional fees.
+
+Q: How are fees paid?
+A: Fees are usually paid monthly or according to the selected payment plan.
+
+Q: What proof is needed for Malawian fee status?
+A: Students must provide proof of residency or nationality to qualify for Malawian national fees.
+
+Q: Which bank is used for fee payments?
+A: The bank details for fee payments are:
+- Bank Name: Standard Bank of Malawi
+- Account Name: Astria Learning Limited
+- Account Number: 9100007260609
+
+Q: Where can students confirm updated fees?
+A: Students are encouraged to contact the University administration or visit the official University of Malawi E-Campus website for the latest updates.
+
+Q: How should the assistant respond when a student asks a broad tuition-fee question?
+A: If a student asks a broad question such as "How much are fees at UNIMA?", explain that UNIMA tuition fees vary by study level and student category. Then ask the student for:
+- whether they are undergraduate, postgraduate master's, or doctorate
+- whether they are a Malawian national or international student
+
+Q: Is UNIMA registration done manually or online?
+A: Registration is fully online through the student portal and the system automatically updates student status once payment is confirmed.
+
+Q: What payment is required before registration at UNIMA?
+A: Students must pay a minimum of approximately MK12,000 before they are allowed to access and complete registration.
+
+Q: What happens after paying the registration fee at UNIMA?
+A: Once payment is confirmed, the system automatically activates registration access within seconds, allowing the student to register through the portal.
+
+Q: What is the UNIMA fee payment structure after registration?
+A: Students must pay half of the fees after two weeks and the remaining balance after one month. Failure to complete payments may result in deregistration.
+
+Q: What happens if a student does not pay full fees at UNIMA?
+A: If a student fails to complete payment requirements, they may be automatically deregistered without refund.
+
+Q: Is UNIMA registration approved manually by staff?
+A: No. Registration is automatic. Once payment is confirmed, the system immediately allows the student to register without manual approval.
+
+Q: What happens if I miss the registration deadline?
+A: You may register during the late registration period with an additional fee. After that period, you will not be permitted to attend classes or sit exams until the next semester.
+
+Q: Can I register without paying fees?
+A: No. Full or agreed partial payment of fees is required before registration can be processed.
+
+Q: How do I apply for admission to UNIMA?
+A: Applications can be made through the following portals depending on the programme:
+- Undergraduate (UCE): https://admission.unima.ac.mw
+- Postgraduate: https://admission.unima.ac.mw
+- Law programmes: https://clea.unima.ac.mw
+- Public University Application: https://pus.nche.ac.mw
+- Economic Fee-paying and Mature Entry application forms are also available on the UNIMA website.
+
+Q: What are the Required documents for registration?
+A: National ID or passport, Previous academic transcripts and/or Proof of payment.
+
+Q: Does tuition fees vary by program and level?
+A: yes it varies by program, study level (undergraduate vs postgraduate), and nationality.
+
+Q: What are the payment options?
+A: The paymentoptions may include Bank deposit, mobile money, and online payment via student portal.
+
+Q: What is the penalty for late tuition fee payment?
+A: Failure to pay full tuition fees or required minimum percentage by the deadline can result to revocation or withdrawal of admission.
+
+Q: What are Financial support options?
+A: Financial support options include loans, grants, and scholarships from the Higher Education Students Loans and Grants Board(HESLGB), private support via National Bank of Malawi(NBM) cholarship program, Edward Chiwaula Trust, and various NGOs.
+
+Q: What are the requirements for writing examinations?
+A: Student ID is mandatory and full fee payment is required.

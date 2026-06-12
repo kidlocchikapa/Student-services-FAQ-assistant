@@ -5,8 +5,75 @@ Interactive CLI for the RAG pipeline.
 """
 
 import argparse
+import os
+import re
+import subprocess
 import sys
-from src.pipeline import RAGPipeline
+from pathlib import Path
+
+
+def _bootstrap_local_venv() -> None:
+    """Relaunch with the project's virtualenv interpreter when available."""
+    project_root = Path(__file__).resolve().parent
+    venv_python = project_root / "venv" / "Scripts" / "python.exe"
+
+    if Path(sys.executable).resolve() == venv_python.resolve():
+        return
+
+    if not venv_python.exists():
+        return
+
+    result = subprocess.run([str(venv_python), __file__, *sys.argv[1:]])
+    raise SystemExit(result.returncode)
+
+
+_bootstrap_local_venv()
+os.environ.setdefault("USER_AGENT", "student-services-faq-assistant/1.0")
+
+from src.pipeline import RAGPipeline, TUITION_CLARIFICATION_MESSAGE
+
+
+def _print_interactive_help() -> None:
+    print("Commands:")
+    print("  teach   Add a new FAQ entry and refresh the knowledge base")
+    print("  refresh Rebuild the vector index from the current data files")
+    print("  help    Show this help message")
+    print("  quit    Exit the assistant\n")
+
+
+def _teach_interactively(pipeline: RAGPipeline) -> None:
+    print("\nTeach mode: add a new UNIMA FAQ entry.")
+    question = input("New question: ").strip()
+    if not question:
+        print("Teaching cancelled: question cannot be empty.\n")
+        return
+
+    answer = input("New answer: ").strip()
+    if not answer:
+        print("Teaching cancelled: answer cannot be empty.\n")
+        return
+
+    target_path = pipeline.add_faq_entry(question, answer)
+    print(f"\nKnowledge saved to: {target_path}")
+    print("Vector index refreshed. You can ask that question now.\n")
+
+
+def _contains_fee_terms(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(fee|fees|tuition|cost|costs|payment|payments|sponsored|undergraduate|postgraduate|bachelor|bachelors|degree|programme|program|course)\b",
+            text.lower(),
+        )
+    )
+
+
+def _expand_follow_up_query(query: str, details: list[str] | None = None) -> str:
+    combined_details = " ".join([*(details or []), query]).strip()
+    return (
+        "UNIMA tuition fees request. Student details: "
+        f"{combined_details}. "
+        "Use the available fee structure and clarify any missing category only if necessary."
+    )
 
 
 def interactive_mode(pipeline: RAGPipeline):
@@ -14,7 +81,9 @@ def interactive_mode(pipeline: RAGPipeline):
     print("=" * 50)
     print("RAG Assistant - Interactive Mode")
     print("=" * 50)
-    print("Type 'quit' or 'exit' to stop\n")
+    print("Type 'help' for commands or 'quit' to stop\n")
+    awaiting_fee_details = False
+    fee_detail_buffer = []
 
     while True:
         try:
@@ -24,18 +93,36 @@ def interactive_mode(pipeline: RAGPipeline):
                 print("Goodbye!")
                 break
 
+            if query.lower() == "help":
+                _print_interactive_help()
+                continue
+
+            if query.lower() == "refresh":
+                print("\nRefreshing knowledge base...")
+                pipeline.refresh_knowledge()
+                print("Knowledge base refreshed.\n")
+                continue
+
+            if query.lower() == "teach":
+                _teach_interactively(pipeline)
+                continue
+
             if not query:
                 continue
 
-            response = pipeline.query(query, return_sources=True)
+            effective_query = query
+            if awaiting_fee_details:
+                fee_detail_buffer.append(query)
+                effective_query = _expand_follow_up_query(query, fee_detail_buffer[:-1])
+            elif _contains_fee_terms(query):
+                fee_detail_buffer = [query]
+
+            response = pipeline.query(effective_query, return_sources=False)
+            awaiting_fee_details = response["answer"].strip() == TUITION_CLARIFICATION_MESSAGE.strip()
+            if not awaiting_fee_details:
+                fee_detail_buffer = []
 
             print(f"\nAssistant: {response['answer']}")
-
-            if "sources" in response and response["sources"]:
-                print("\nSources:")
-                for i, source in enumerate(response["sources"], 1):
-                    print(f"  {i}. {source.get('metadata', {}).get('source', 'Unknown')}")
-                    print(f"     {source['content'][:100]}...")
 
             print()
 
@@ -80,8 +167,13 @@ def main():
     parser.add_argument(
         "--embedder",
         default="huggingface",
-        choices=["huggingface", "openai", "ollama"],
+        choices=["huggingface", "openai", "ollama", "local"],
         help="Embedder provider"
+    )
+    parser.add_argument(
+        "--embedder-model",
+        default="sentence-transformers/all-MiniLM-L6-v2",
+        help="Embedder model name"
     )
     parser.add_argument(
         "--llm",
@@ -91,7 +183,7 @@ def main():
     )
     parser.add_argument(
         "--llm-model",
-        default="phi3",
+        default="phi3:latest",
         help="LLM model name"
     )
     parser.add_argument(
@@ -106,23 +198,41 @@ def main():
         default=500,
         help="Chunk size for text splitting"
     )
+    parser.add_argument(
+        "--enable-web-fallback",
+        action="store_true",
+        help="Use official UNIMA web pages as a fallback source"
+    )
+    parser.add_argument(
+        "--web-url",
+        action="append",
+        dest="web_urls",
+        default=[],
+        help="Official UNIMA web page URL to include for fallback retrieval. Repeat for multiple URLs."
+    )
 
     args = parser.parse_args()
 
     print("Initializing RAG Pipeline...")
     print(f"  Data directory: {args.data_dir}")
-    print(f"  Embedder: {args.embedder}")
+    print(f"  Embedder: {args.embedder} ({args.embedder_model})")
     print(f"  LLM: {args.llm} ({args.llm_model})")
     print(f"  Retrieval K: {args.k}")
     print(f"  Chunk size: {args.chunk_size}")
+    print(f"  Web fallback: {'enabled' if args.enable_web_fallback else 'disabled'}")
+    if args.enable_web_fallback and args.web_urls:
+        print(f"  Web URLs: {', '.join(args.web_urls)}")
 
     pipeline = RAGPipeline(
         data_dir=args.data_dir,
         embedder_provider=args.embedder,
+        embedder_model=args.embedder_model,
         llm_provider=args.llm,
         llm_model=args.llm_model,
         retrieval_k=args.k,
-        chunk_size=args.chunk_size
+        chunk_size=args.chunk_size,
+        enable_web_fallback=args.enable_web_fallback,
+        web_fallback_urls=args.web_urls,
     )
 
     pipeline.load_and_index()
